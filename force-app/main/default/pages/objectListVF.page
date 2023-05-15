@@ -1,0 +1,117 @@
+<apex:page controller="PaginationController">
+    <apex:form id="fm">
+        <apex:pageBlock >
+            <apex:outputLabel value="Select Object :- " style="font-size: 18px;"/>&nbsp; 
+            
+            <!-- Objects DropDown List -->
+            <apex:selectList value="{!selectedObject}" size="1"  style="width:200px; height:30px;">
+                <apex:selectOptions value="{!sObjectList}" />
+                <apex:actionSupport action="{!fieldNames}" event="onchange" reRender="fm"  status="pageStatus"/>
+            </apex:selectList>
+            
+            <!-- Spinner -->
+            <apex:actionStatus id="pageStatus"> 
+                <apex:facet name="start">
+                     <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 25% 42%">
+                       <!-- <img src="/img/loading32.gif" width="25" height="25"/>Loading.... -->
+                        <span><img src="/img/loading32.gif" width="25" height="25"/>Loading....</span>
+                       
+                     </div>
+
+
+                   <!-- <apex:outputPanel >
+                        <img src="/img/loading32.gif" width="25" height="25" />
+                        <apex:outputLabel value="Loading..."/>
+                    </apex:outputPanel> -->           
+                </apex:facet>
+            </apex:actionStatus>
+
+            &nbsp;
+            <apex:commandButton value="Reset" action="{!reset}" style="width:80px; height:30px;"/>
+
+            
+            <br/><br/>
+            
+           <!-- rendered="{!render}"-->
+            <apex:pageBlockSection id="AllFields" rendered="{!render}">
+                <apex:pageBlockSectionItem >
+                    <apex:panelGrid columns="3" >
+                        <apex:panelGroup style="width:80%;">
+                            
+                                <apex:outputText value="{!selectedObject} : Fields" style="font-size: 18px;"/>
+                            
+                            
+                            <apex:selectList value="{!sfields}"  multiselect="true"  style="width:300px; height:200px;" >
+                				<apex:selectOptions value="{!fnsoption}"/>
+            				</apex:selectList>
+                        </apex:panelGroup>
+                        
+                        <apex:panelGroup style="width:20%;height:120px;">
+                            <table height="120px;">
+                                <tr>
+                                    <td>
+                                        <apex:commandButton value="Add" action="{!addFields}" disabled="{!disableAddButton}" status="pageStatus" reRender="AllFields" style="width:80px; height:30px;"/>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                        <apex:commandButton value="Remove" action="{!removeFields}" disabled="{!disableRemoveButton}"  status="pageStatus"   style="width:80px; height:30px;"/>
+                                    </td>
+                                </tr>   
+                            </table>
+                            <!--<apex:commandButton value="Add" style="width:80px; height:120px;"/>
+                            <apex:commandButton value="Remove" style="width:80px; height:120px;"/>-->
+                        </apex:panelGroup>
+                        
+                        <apex:panelGroup style="width:80%;">
+                          
+                            <apex:outputText value="Selected : Fields" style="font-size: 18px;"/>
+                           <apex:selectList value="{!rfields}" multiselect="true"  style="width:300px; height:200px;" >
+                				<apex:selectOptions value="{!fsoption}"/>
+            				</apex:selectList>
+                        </apex:panelGroup>
+                    </apex:panelGrid>
+                </apex:pageBlockSectionItem>
+                <br/>
+                <apex:pageBlockSection >
+                    <apex:commandButton value="Process" action="{!showData}"  oncomplete="handleProcess()" style="width:80px; height:30px;" disabled="{!disableProcessButton}" reRender="fm,com" status="pageStatus"  />
+                    
+                
+                </apex:pageBlockSection>
+            <!--<apex:pageBlockSection >
+                <apex:pageBlockTable value="{!myData}" var="a">
+                    <apex:repeat value="{!myfields}" var="b">
+                        <apex:column value="{!a[b]}"/>
+                    </apex:repeat>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>-->
+                
+            </apex:pageBlockSection>
+            
+            <!--<apex:pageBlockSection >
+                <apex:pageBlockTable value="{!myData}" var="a">
+                    <apex:repeat value="{!myfields}" var="b">
+                        <apex:column value="{!a[b]}"/>
+                    </apex:repeat>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>-->
+            
+            
+            <!--<apex:selectList value="{!fields1}" multiselect="true" size="10" id="AllFields" >
+                <apex:selectOptions value="{!fieldList}"/>
+            </apex:selectList>-->
+            <br/>
+            <apex:pageBlockSection rendered="{!showTable}"  >
+                <c:My_Component objectName="{!selectedObj}" fieldName="{!stringFldNames}" id="com"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+    <script>
+        function handleProcess(){
+            init();
+        }
+    </script>
+
+</apex:page>

@@ -1,0 +1,29 @@
+<apex:page controller="PicklistClass" >
+    <apex:form >
+        <apex:pageBlock >
+           
+                <apex:outputLabel ><b>Select Object &nbsp; </b></apex:outputLabel>
+            	<apex:selectList value="{!objList}" size="1" >
+                	<apex:actionSupport event="onchange" reRender="info" status="PageStatus"/>
+                	<apex:selectOptions value="{!lst}"/>   
+            	</apex:selectList>
+        
+        		<apex:actionStatus id="PageStatus" >
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <img src="/img/loading32.gif" width="25" height="25" />
+                            <apex:outputLabel value="Loading..."/>
+                        </apex:outputPanel>            
+                    </apex:facet>
+				</apex:actionStatus>
+            
+            	<apex:pageBlockSection id="info">
+                    {!objList}
+                    
+            	</apex:pageBlockSection>
+            
+            	
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

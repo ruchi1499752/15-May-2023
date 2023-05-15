@@ -1,0 +1,16 @@
+<aura:component>
+    <aura:attribute name="numbers" type="List" />
+    <lightning:button label="DisplayNumbers" onclick="{!c.getNumbers}"/>
+    <aura:iteration var="num" items="{!v.numbers}">
+        {!num}
+    </aura:iteration>
+    <aura:attribute name="edit" type="Boolean" default="true"/>
+    <aura:if isTrue="{!v.edit}">
+        <lightning:button label="Edit"/>
+    <aura:set attribute="else">
+    You can’t edit this.
+    </aura:set>
+    </aura:if>
+
+    <c:child/>
+</aura:component>

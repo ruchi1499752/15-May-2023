@@ -1,0 +1,25 @@
+.THIS .slds-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .THIS .slds-table td,
+  .THIS .slds-table th {
+    border: 1px solid #d0d0d0;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  
+  .THIS .slds-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .THIS .slds-table tr.slds-hint-parent:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+  }

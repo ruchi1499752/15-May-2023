@@ -1,0 +1,29 @@
+<template>
+    <div class="slds-tabs_card">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container ">
+                                 <lightning-icon icon-name="utility:multi_picklist" ></lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span>LWC Combobox</span>
+                                        <span class="slds-page-header__title slds-truncate">Single/ Multi-Select Combobox</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <br/>
+
+    <c-multi-Select-Combobox-Child-Component payload={payload} onselectoption={handleSelectOptionList} label="Single Select Pick List"></c-multi-Select-Combobox-Child-Component>
+</template>

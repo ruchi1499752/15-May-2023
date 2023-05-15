@@ -1,0 +1,25 @@
+<template>
+    <h1 style="background-color: cyan;">Name is : {name}</h1>
+    <lightning-card >
+        <lightning-layout>
+            <template if:true={message}>
+                {message}<br/>
+                <h1>Hello</h1>
+            </template>
+        </lightning-layout>
+        
+    </lightning-card>
+    <br/>
+
+    <lightning-card>
+        <lightning-layout>
+            <lightning-layout-item padding="around-small">
+                <template for:each={contacts} for:item="item" for:index="index">
+                    <p key={item.id}>{index}</p>
+                    {item.Name}
+
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

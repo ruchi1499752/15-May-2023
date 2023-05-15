@@ -1,0 +1,8 @@
+<aura:component>
+    <!--{!$Browser.isTablet}<br/>
+    {!$Browser.isPhone}
+    {!$Browser.isAndroid}
+    !1Browser.formFactor -->
+    <aura:attribute name="whom" type="String" default="world"/>
+    {!v.whom}
+</aura:component>

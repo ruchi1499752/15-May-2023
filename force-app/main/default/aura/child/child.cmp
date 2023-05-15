@@ -1,0 +1,93 @@
+<aura:component controller="ServerSidePaginationController">
+
+	  <aura:attribute name="response" type="Object"/>
+    <!--<aura:attribute name="fields" type="List"/>-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="record" type="List"/>
+    <aura:attribute name="field" type="List"/>
+    <aura:attribute name="totalSize" type="integer" description="total records count  "/>
+    <aura:attribute name="page" type="integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="firstRec" type="String" />
+    <aura:attribute name="lastRec" type="String" />
+    <aura:attribute name="totalPages" type="Integer"/>
+    <aura:attribute name="hasPrevious" type= "Boolean" default="TRUE"/>
+    <aura:attribute name="hasNext" type= "Boolean" default="FALSE"/>
+    
+    <aura:attribute name="sortedBy" type="String" />
+    <aura:attribute name="sortedDirection" type="string" default="asc" />
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <!-- attribute to check if the page has changed or not -->
+    <aura:attribute name="hasPageChanged" type="Boolean" />
+     <!-- attribute to hold selected all rows -->
+    <aura:attribute name="selected" type="List"/>
+    <!--<aura:attribute name="initialLoad" type="Boolean" default="true"/>-->
+    <aura:attribute name="selectedRecordIds" type="List" default="[]"/>
+    <aura:attribute name="isNavigate" type="Boolean" default="false"/>
+    
+   
+    <br/><br/>
+    <!-- <aura:attribute name="showTable" type="Boolean" default="false"/>-->  
+     <!-- <aura:if isTrue="{!v.showTable}">-->
+    <div class="slds-page-header__title " >Total {!v.totalSize} Records</div>
+    <br/>
+
+   <!-- <aura:attribute name="spinner" type="Boolean" default="false"/>
+    <aura:if isTrue="{!v.spinner}"> 
+          <div class="exampleHolder">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+    </div>
+        
+    
+    </aura:if>-->
+    
+  
+    <!-- Display Data Table -->
+    <div style="height: 400px">
+      <lightning:datatable aura:id="maintainState"
+        keyField="Id"
+        data="{!v.record}"
+        columns="{!v.field}"
+        sortedBy="{!v.sortedBy}"
+        sortedDirection="{!v.sortedDirection}"
+        onsort="{!c.sortColumn}"
+        
+        selectedRows ="{!v.selected}"
+        onrowselection="{!c.selectedRecord}"
+        hideCheckboxColumn="false"/>
+    </div>
+    <br/><br/>
+	<!--</aura:if>-->  
+
+    <div class="slds-grid ">
+      <div class="slds-col slds-size_3-of-12">
+        <span class="slds-page-header__title ">
+            <ui:inputSelect aura:id="recordPageSize" label="Records Per Page : " change="{!c.onSelectChange}">
+                <ui:inputSelectOption text="5" label="5" />
+                <ui:inputSelectOption text="10" label="10" value="true" />
+                <ui:inputSelectOption text="15" label="15" />
+                <ui:inputSelectOption text="20" label="20" />
+            </ui:inputSelect>
+        </span>
+      </div>
+      <div class="slds-col slds-size_6-of-12" >
+        <span>
+            <lightning:button variant="brand"  label="First" onclick="{!c.firstButton}" disabled = "{!v.hasPrevious}" /> 
+            
+            <lightning:button variant="brand" label="Previous" onclick="{!c.previousButton}" disabled = "{!v.hasPrevious}"/> 
+            <lightning:button variant="brand" label="Next" onclick="{!c.nextButton}" disabled = "{!v.hasNext}" /> 
+            <lightning:button variant="brand" label="Last" onclick="{!c.lastButton}" disabled = "{!v.hasNext}"/>
+            <!--<lightning:button variant="brand" aura:id ="firstButton" name="first" label="First" onclick="{!c.buttonClick}" disabled = "{!v.hasPrevious}" /> 
+            <lightning:button variant="brand" aura:id ="previousButton" label="Previous" onclick="{!c.buttonClick}" disabled = "{!v.hasPrevious}"/> 
+            <lightning:button variant="brand" aura:id ="nextButton" label="Next" onclick="{!c.buttonClick}" disabled = "{!v.hasNext}" /> 
+            <lightning:button variant="brand" aura:id ="lastButton" label="Last" onclick="{!c.buttonClick}" disabled = "{!v.hasNext}"/>-->
+          </span>
+
+      </div>
+      <div class="slds-col slds-size_3-of-12">
+        <span class="slds-page-header__title ">
+          Page Number :  {!v.page} of {!v.totalPages}
+        </span>
+      </div>
+</div>
+</aura:component>

@@ -1,0 +1,72 @@
+<apex:page standardController="Account" recordSetVar="list">
+    <apex:form >
+        
+        <apex:pageBlock >
+            <apex:pageBlockButtons title="Contact ">
+               <apex:commandButton action="{!save}" value="Save"/>
+               <apex:commandButton action="{!quickSave}" value="Quick Save"/>
+            </apex:pageBlockButtons>
+            
+          
+                <apex:selectList value="{!filterId}" size="1" >
+                      Filter : <apex:actionSupport event="onchange" rerender="info" status="pageStatus"/>
+                      <apex:selectOptions value="{!listviewoptions}" />
+                </apex:selectList>
+               
+                
+               <!-- <apex:selectList size="1">
+                    <apex:selectOption itemLabel="All Accounts" itemValue="All Contacts"/>
+                    <apex:selectOption itemLabel="My Accounts" itemValue="My Contacts"/>    
+                   
+                </apex:selectList>-->
+                <apex:actionStatus id="pageStatus" >
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <img src="/img/loading32.gif" width="25" height="25" />
+                            <apex:outputLabel value="Loading..."/>
+                        </apex:outputPanel>            
+                    </apex:facet>
+				</apex:actionStatus>
+                
+           
+            <apex:pageBlockSection >
+                <apex:pageBlockTable value="{!list}" var="acc" id="info" style="width:200%;" >
+                    <apex:column headerValue="Account Name" >
+                     	<apex:inputField value="{!acc.name}"/>
+                    </apex:column>
+                    <apex:column headerValue="Industry" >
+                     	<apex:inputField value="{!acc.Industry}"/>
+                    </apex:column>
+                     <apex:column headerValue="Account ID" >
+                     	<apex:inputField value="{!acc.id}"/>
+                    </apex:column>
+                     <apex:column headerValue="Account Rating" >
+                     	<apex:inputField value="{!acc.Rating}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+          </apex:pageBlock>
+        
+            <!-- Pagination -->
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                         Page: <apex:outputText value=" {!PageNumber} of {! CEILING(ResultSize / PageSize) }"/>
+                    </td>
+                    <td align="center">
+                        <apex:commandButton action="{!first}" value="First" />
+                        <apex:commandButton action="{!Previous}" value="Previous" />
+                        <apex:commandButton action="{!next}" value="next" />
+                        <apex:commandButton action="{!last}" value="Last" />
+                    </td>
+                    <td align="right">
+                        <apex:selectList value="{! PageSize }" size="1">
+                       
+                        Record Per Page :<apex:selectOption itemValue="20" itemLabel="20"/>
+                        <apex:actionSupport event="onchange" />
+                        </apex:selectList>
+                    </td>
+            </tr>
+            </table>
+      </apex:form>
+</apex:page>

@@ -1,0 +1,7 @@
+<design:component label="RichText Component">
+    <design:attribute name="label" label="Label"/>
+    <design:attribute name="value" label="Value"/>
+    <design:attribute name="required" label="Required?"/>
+    <design:attribute name="placeholder" label="Placeholder"/>
+	
+</design:component>

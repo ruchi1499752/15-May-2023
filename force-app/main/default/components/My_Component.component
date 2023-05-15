@@ -1,0 +1,246 @@
+<apex:component controller="Pagination_Component_Class" allowDML="true">
+  
+    <apex:attribute name="objectName" description="Objects Names" type="String" assignTo="{!obj}" />
+    <apex:attribute name="fieldName" description="Fields Names" type="String"  assignTo="{!fields}"/>
+    <!--<apex:attribute name="SelectedField" description="none" type="SelectOption[]" assignTo="{!fieldLabel}"></apex:attribute>-->
+    <apex:actionFunction name="init" action="{!displayData}" />
+    
+    
+    <!-- Component Definition -->
+    
+    <apex:pageBlock id="table" rendered="{!showData}" >
+      <apex:pageMessages ></apex:pageMessages>
+          <div style="width:1000px; ">
+              <div align="left">
+                  <!-- Buttons for New Record, Deleted Selected Record and Download CSV File -->
+                  
+                  <apex:commandButton value="New Record" action="{!URLFOR($Action[obj].New)}"  style="width:90px; height:30px;"/>
+                  <apex:commandButton value="Delete Selected" action="{!deleteSelectedRecords}" reRender="table" style="width:90px; height:30px;"/>
+                  <apex:commandButton value="Download CSV" action="{!CreateCsvfiles}" oncomplete="downloadCsvFile()" reRender="downloadCSV" style="width:90px; height:30px;"/>
+              </div>
+              <div align="right" >
+                <apex:panelGrid >
+                	<!-- Alphabet Filters -->
+                    
+                    <apex:repeat value="{!alphabet}" var="alph">
+                        <apex:commandLink value="{!alph} | " action="{!alphaSearch}" reRender="table">
+                        <apex:param name="a" value="{!alph}" assignTo="{!alphaSearchRecord}"/>
+                        </apex:commandLink>
+                    </apex:repeat>
+                
+                </apex:panelGrid>
+           	 </div>  
+
+             <!-- Display Records In Table -->   	
+        	<apex:outputPanel layout="block" style="overflow:auto; width:750;height:400px;">	
+              <apex:pageBlockTable value="{!wrapList}" var="record" width="300px;" id="pgtable" >
+                <!--1st Colum for Master and Child Checkbox-->  
+                <apex:column >
+                    <apex:facet name="header">
+                      <apex:inputCheckbox styleClass="mastercheck" onclick="selectallChkBox()" />
+                    </apex:facet>
+                    <apex:inputCheckbox styleClass="childcheck" value="{!record.selcetedCheckBox}" onclick="deselectChkBox()" ></apex:inputCheckbox>
+                    <!--selectedCount();-->
+                </apex:column>
+
+                <!-- 2nd Column : Edit and Delete Link -->
+                <apex:column >
+                  <apex:facet name="header">
+                    <apex:commandLink value="Actions"/>
+                  </apex:facet>
+                  <apex:commandLink value="Edit | " onclick="window.open('/{!record.rec.id}')"></apex:commandLink>
+                  <apex:commandLink value="Del" action="{!URLFOR($Action[obj].Delete,record.rec.id)}">
+	                    
+                  </apex:commandLink>
+                </apex:column>
+
+                  
+              	<apex:repeat value="{!selectedFields}" var="field">
+            	
+              		<apex:column value="{!record.rec[field]}">
+                        	<!--Fields Name Link and Sorting -->
+                  		 <apex:facet name="header">
+                       <!-- value="{!$ObjectType[obj].Fields[field].Label + IF(fieldname==field,IF(sortDirection='ASC','▲','▼'),'')}"-->
+                			<apex:commandLink value="{!field}" action="{!sortExpression}" reRender="table">
+								 <apex:param name="b" value="{!field}" assignTo="{!fieldname}"/>
+        					 </apex:commandLink>
+                		</apex:facet>
+        			</apex:column>
+            
+       			 </apex:repeat>
+       		</apex:pageBlockTable>
+                
+             </apex:outputPanel>
+
+          </div>
+
+      
+        <div id="button" >
+             Record Per Page : 
+            <apex:SelectList value="{!RecordsPerPageslist}" size="1" >
+                    <apex:selectOptions value="{!options}"/>    
+                    <apex:actionSupport event="onchange" action="{!updateRecordSize}" oncomplete="deselectChkBox()" reRender="table"/>
+            </apex:SelectList>
+          
+        </div>
+        
+         <!-- <apex:outputLabel  > 0 Selected </apex:outputLabel>
+            <apex:outputText ></apex:outputText>-->
+           <!--<span id="selectcnt" > 0 Selected </span>-->
+        
+        <div style="margin-left : 400px;">
+          <!-- To return to first page of records-->
+          <apex:commandButton action="{!first}" value="First" title="First Page" disabled="{!!std.HasPrevious}" oncomplete="deselectChkBox()" reRender="table" style="width:60px; height:30px;" />
+          <!-- To return to Previous page of records-->
+          <apex:commandButton action="{!pre}" value="Previous" disabled="{!!std.HasPrevious}" style="width:60px; height:30px;" reRender="table" oncomplete="deselectChkBox()">
+           
+          </apex:commandButton>
+          <!-- To return to next page of records-->
+          <apex:commandButton action="{!next}" value="Next" disabled="{!!std.HasNext}" style="width:60px; height:30px;" reRender="table" oncomplete="deselectChkBox()" >
+            
+          </apex:commandButton>
+          <!-- To return to last page of records-->
+           <apex:commandButton action="{!last}" value="Last" title="Last Page" disabled="{!!std.HasNext}" style="width:60px; height:30px;" reRender="table" oncomplete="deselectChkBox()"/>
+          <!-- InputText to display current page and to navigate to any page number, At righmost side of page-->
+        </div>
+
+        <div style="float:right; margin-top:-20px;">
+            <apex:outputLabel value="Page ">
+              </apex:outputLabel>
+              <apex:InputText value="{!std.PageNumber}" size="1" onchange="changePageNumber()"/><!-- 1 of Total Pages-->
+
+              <apex:outputLabel value=" of {! CEILING(std.ResultSize / std.PageSize)}"> <!--Result size: Returns the number of records in the set. / Returns the number of records included in each page set.-->
+            </apex:outputLabel>
+            
+        </div>
+        
+    
+        <!-- 
+        <apex:panelGrid columns="4">
+            <apex:panelGroup >
+                <div id="button" >
+                     Record Per Page : 
+                    <apex:SelectList value="{!RecordsPerPageslist}" size="1" >
+                            <apex:selectOptions value="{!options}"/>    
+                            <apex:actionSupport event="onchange" action="{!updateRecordSize}" oncomplete="deselectChkBox()" reRender="table"/>
+                    </apex:SelectList>
+         		</div>
+            </apex:panelGroup>
+            <apex:panelGroup>
+                <span id="selectcnt" > 0 Selected </span>
+            </apex:panelGroup>
+            	
+            <apex:panelGroup>
+                <div style="margin-left : 200px;">
+          
+          <apex:commandButton action="{!first}" value="First" title="First Page" disabled="{!!std.HasPrevious}" oncomplete="deselectChkBox()" reRender="table" style="width:60px; height:30px;" />
+        
+          <apex:commandButton action="{!pre}" value="Previous" disabled="{!!std.HasPrevious}" style="width:60px; height:30px;" reRender="table" oncomplete="deselectChkBox()">
+           
+          </apex:commandButton>
+          
+          <apex:commandButton action="{!next}" value="Next" disabled="{!!std.HasNext}" style="width:60px; height:30px;" reRender="table" oncomplete="deselectChkBox()" >
+            
+          </apex:commandButton>
+          
+           <apex:commandButton action="{!last}" value="Last" title="Last Page" disabled="{!!std.HasNext}" style="width:60px; height:30px;" reRender="table" oncomplete="deselectChkBox()"/>
+         
+        </div>
+            </apex:panelGroup>
+        </apex:panelGrid>
+        	
+        <apex:panelGroup>
+            <div style="float:right; margin-top:-20px;">
+            <apex:outputLabel value="Page ">
+              </apex:outputLabel>
+              <apex:InputText value="{!std.PageNumber}" size="1" onchange="changePageNumber()"/>
+
+              <apex:outputLabel value=" of {! CEILING(std.ResultSize / std.PageSize)}">       
+        </apex:outputLabel>
+            
+        </div>
+        </apex:panelGroup>-->
+              
+      </apex:pageBlock>
+            
+     <apex:outputpanel id="downloadCSV">
+       <script>
+         function selectallChkBox(){
+             var inputChkBox = document.getElementsByClassName("childcheck");
+             
+             if(document.getElementsByClassName("mastercheck")[0].checked == true){
+                 for(var i= 0; i<inputChkBox.length; i++){
+                     inputChkBox[i].checked = true;
+                 }
+             }
+             else{
+                 for(var i = 0; i<inputChkBox.length; i++){
+                     inputChkBox[i].checked = false;
+                 }
+             }
+         }
+    
+    function deselectChkBox(){
+
+            var totalChildCheckBox= document.querySelectorAll('input[class="childcheck"]').length;
+            console.log(totalChildCheckBox);
+            
+       				
+            var totalchecked = document.querySelectorAll('input[class="childcheck"]:checked').length;
+            console.log(totalchecked);
+            
+            if(totalChildCheckBox == totalchecked){
+                document.getElementsByClassName("mastercheck")[0].checked=true;
+            		
+              }
+            else{
+                document.getElementsByClassName("mastercheck")[0].checked=false;
+        		}
+        }
+
+
+        /*function noenter(ev)  {
+        if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+            callAcctRet();
+            return false;
+         } else {
+              return true;
+         }
+     }*/
+
+
+     function downloadCsvFile(){
+     
+      var csvName ='{!csv}';
+      document.write(csvName);
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvName);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'Records.csv';
+      hiddenElement.click();
+     }
+             
+    /*public void selectedCount(){
+         var cnt = 0;
+         var childs = document.getElementsByClassName('childcheck');
+         console.log(cnt);
+         for(var i=0; i<childs.length; i++){
+             if(childs[i] == true){
+                 cnt++;
+             }
+             
+         }
+         document.write(cnt);
+         console.log(cnt);
+         document.getElementById('selectcnt').innerHTML = cnt + '&nbsp;Selected';
+     }*/       
+
+       </script>  
+             
+       </apex:outputpanel>  
+          
+  
+
+    
+  
+</apex:component>

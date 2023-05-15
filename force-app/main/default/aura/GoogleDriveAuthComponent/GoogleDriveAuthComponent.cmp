@@ -1,0 +1,201 @@
+<aura:component controller="googleDriveController" implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="accessToken" type="String" />
+    <aura:attribute name="fileData" type="List"/>
+    <aura:attribute name="folderData" type="List"/>
+    <aura:attribute name="showModal" type="Boolean" default="false"/>
+    <aura:attribute name="show" type="Boolean" default="false"/>
+    <aura:attribute name="FolderName"   type="String"/>
+    <aura:attribute name="storeAccessToken" type="String"/>
+    <aura:attribute name="RecordTypeName" type="String" default="Google_Drive"/>
+    <aura:attribute name="ShowComponent" type="Boolean" default="false"/>
+     <aura:attribute name="BreadCrumbs" type="List" />
+
+     <aura:attribute name="spinner" type="Boolean" default="false"/>
+    <aura:if isTrue="{!v.spinner}"> 
+    	<div class="exampleHolder">
+        	<lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+    	</div>
+    </aura:if>
+    <br/><br/>
+	
+    <!-- Breadcrumb -->
+    <div class="slds-box slds-box_x-small">
+        <nav role="navigation" aria-label="Breadcrumbs">
+        <ol class="slds-breadcrumb slds-list_horizontal slds-wrap" >
+            <aura:iteration items="{!v.BreadCrumbs}" var="Bcrumbs">
+                <h1><a style="text-decoration:none" onclick="{!c.bCrumbNavigation}" data-id ="{!Bcrumbs.id}" data-name ="{!Bcrumbs.name}">&nbsp;&nbsp;{!Bcrumbs.name }&nbsp;&nbsp; <b>></b></a></h1>
+            </aura:iteration>
+        </ol>
+        </nav>
+    </div>
+    <br/>
+   
+    <br/>
+    
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_6-of-12 slds-text-heading_small" >
+                <h1 >FILES</h1>
+            </div>
+           
+            <div class="slds-col slds-size_6-of-12" style="padding-left: 500px;">
+                <lightning:button variant="brand" label="Upload New File" iconName="utility:upload" iconPosition="left"  onclick="{!c.uploadNewFile }"/>
+                <aura:if isTrue="{!v.show}">
+                               <!-- <c:ShowModal />-->
+                        <section  role="dialog" tabindex="-1" aria-modal="true" style="background-color: rgba(0,0,0,0.75);" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                        <div aura:id="MainDiv" class="slds-modal__container">
+                            
+                            <div class="slds-modal__header">
+                                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Upload New File</h1>
+                            </div>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <lightning:input name="file1" aura:id="fileSelector" type="file" label="Choose File" onchange="{!c.fileUpload}"/>
+                                <!-- <button class="slds-button slds-button "  onclick="" aura:id="btnCancel">Upload</button> -->
+                            </div>
+                            <div class="slds-modal__footer">
+
+                                <button class="slds-button slds-button--neutral .slds-modal__close" aria-label="Cancel and close" onclick="{!c.closeUploadModal}" aura:id="btnCancel">Cancel</button>
+                                
+                            </div>
+                            
+                        </div>
+                            
+                    </section>
+                </aura:if>
+            </div>
+
+        </div>
+    </div>
+    <div class="slds-scrollable" style="height:20rem;width:100% ;"> <!-- border: 1px solid black;-->
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" >    
+            
+            <thead>
+                <tr class="slds-text-heading_small ">
+                    <th>Name</th>
+                    <!-- <th>Size</th> -->
+                    
+                    <th style="padding-left: 560px;">Action</th>
+                </tr>
+            </thead>
+                 
+            <tbody aura:id="tBody">
+                <aura:iteration items="{!v.fileData}" var="mapKey" indexVar="key">
+                    <tr>
+                        <td class="slds-size_6-of-12" data-label = "Files Name">
+                            <!-- <a style="text-decoration: none;" onclick="" data-key="{!mapKey.key}" data-value="{!mapKey.value}"> -->
+                                <lightning:icon iconName="action:add_file" size="x-small" />&nbsp;&nbsp; {!mapKey.value}
+                        </td>
+                        <!-- <td>
+                            Size
+                        </td> -->
+                        
+                        
+
+                            <tr>
+                                <td class="slds-size_6-of-12" style="padding-left: 550px;">
+                                   <!-- <lightning:icon iconName="action:delete" size="small" />&nbsp;-->
+                                    <a onclick="{!c.delFile}" data-key="{!mapKey.key}"><lightning:icon iconName="action:delete" size="x-small" />&nbsp;</a> 
+                                </td>
+                                <td>
+                                    <a onclick="{!c.downloadFile}" data-key="{!mapKey.key}" data-value="{!mapKey.value}"><lightning:icon iconName="action:download" size="x-small" />&nbsp;</a>
+                                </td>
+                            </tr>
+                        
+                        
+                    </tr>
+                    
+                   
+                </aura:iteration>
+    
+            </tbody>
+        
+        </table>
+    </div>
+
+    <br/><br/><br/>
+    <!-- DISPLAY FOLDER DATA -->
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_6-of-12 slds-text-heading_small" >
+                <h1 >FOLDERS</h1>
+            </div>
+            <div class="slds-col slds-size_6-of-12" style="padding-left: 500px;">
+                <lightning:button variant="brand" label="Create New Folder" iconName="utility:new" iconPosition="left"  onclick="{!c.createFolderModal }"/>
+                <aura:if isTrue="{!v.showModal}">
+                               <!-- <c:ShowModal />-->
+                    <section  role="dialog" tabindex="-1" aria-modal="true" style="background-color: rgba(0,0,0,0.75);" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                        <div aura:id="MainDiv" class="slds-modal__container">
+                            
+                            <div class="slds-modal__header">
+                                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Create New Folder</h1>
+                            </div>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                
+                                <lightning:input name="input1" label="Enter Folder Name" value="{!v.FolderName}" />
+                                <button class="slds-button slds-button--neutral "  onclick="{!c.createNewFolder}" aura:id="btnCancel">Create Folder</button>
+                            </div>
+                            <div class="slds-modal__footer">
+
+                                <button class="slds-button slds-button--neutral .slds-modal__close" aria-label="Cancel and close" onclick="{!c.closeModal}" aura:id="btnCancel">Cancel</button>
+                                
+                            </div>
+                            
+                        </div>
+                            
+                    </section>
+                </aura:if>
+            </div>
+         </div>   
+    </div>
+    <div class="slds-scrollable" style="height:20rem;width:100% ;"> <!-- border: 1px solid black;-->
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" >                
+            
+            <thead>
+                <tr class="slds-text-heading_small ">
+                    <th>Name</th>
+                    <!-- <th>Size</th> -->
+                    
+                    <th style="padding-left: 560px;">Action</th>
+                </tr>
+            </thead>
+
+                 
+            <tbody aura:id="tBody">
+                <aura:iteration items="{!v.folderData}" var="mapKey" indexVar="key">
+                    <tr>
+                        <td data-label = "Folder Name" class="slds-size_6-of-12">
+                            <a style="text-decoration: none;" onclick="{!c.openFolder}" data-key="{!mapKey.key}" data-value="{!mapKey.value}"><lightning:icon iconName="standard:folder" size="x-medium" />&nbsp;&nbsp; {!mapKey.value}</a>
+                        </td>
+                        
+                        <td class="slds-size_6-of-12" style="padding-left: 570px;">
+                            <!--<lightning:icon iconName="action:delete" size="small" />&nbsp;-->
+                            <a onclick="{!c.delFolder}" data-key="{!mapKey.key}" ><lightning:icon iconName="action:delete" size="x-small" />&nbsp;</a> 
+                        </td>
+                       <!--<td>
+                            Size
+                        </td>
+                        <td>
+                        
+                            <tr>
+                                <td>Act</td>
+                                <td>Upload</td>
+                            </tr>
+                        </td>-->
+                        
+                    </tr>
+                    
+                   
+                </aura:iteration>
+    
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    
+    
+
+    
+
+      
+</aura:component>

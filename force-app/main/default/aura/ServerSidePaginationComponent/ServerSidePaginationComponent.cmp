@@ -1,0 +1,105 @@
+<aura:component controller="apexController" implements="force:appHostable">
+    <aura:attribute name="options" type="List"/>	
+    <aura:attribute name="selectedObj" type="String"/>
+    <aura:attribute name="picklistField" type="List"/>
+    <aura:attribute name="picklistFieldSelected" type="String"/>
+    <aura:attribute name="picklistValues" type="List"/>
+
+
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Description of icon when needed">
+                    <lightning:icon iconName="standard:kanban" variant="bare" size="large"/>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <h1 class="cusFontStyle" title="Kanban - Drag &amp; Drop">{!v.selected}</h1>
+                <h1> Kanban - Drag &amp; Drop </h1>
+            </div>
+        </div> 
+    </div>   
+    <br/>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-3">
+            <div class="slds-text-heading_medium"><h1>Select Object</h1></div>
+          <span>
+            <lightning:combobox name="objects" 
+            label=""
+            value="{!v.selectedObj}"
+            placeholder="None" 
+            options="{!v.options}" 
+            onchange="{!c.handleChange}"/>
+    	 </span>
+        </div>
+        <div class="slds-col slds-size_1-of-3">
+            <div class="slds-text-heading_medium"><h1>Select Picklist Fields</h1></div>
+            <span>
+                <lightning:combobox name="PickListField" 
+            label=""
+            value="{!v.picklistFieldSelected}"
+            placeholder="None" 
+            options="{!v.picklistField}" 
+            onchange="{!c.picklistHandleChange}"/>
+            </span>
+        </div>
+        
+      </div>
+    
+    <aura:iteration items="{!v.picklistValues}" var="item">
+         {!item + ' '}
+    </aura:iteration>
+    	
+    <br/>
+    
+    <div class="slds-path">
+        <div class="slds-grid slds-path__track">
+            <div class="slds-grid slds-path__scroller-container">
+              <div class="slds-path__scroller">
+                <div class="slds-path__scroller_inner">
+                	<ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                      <aura:iteration items="{!v.picklistValues}" var="item">
+                       	<li class="slds-path__item slds-is-current slds-is-active" role="presentation">
+              				<a aria-selected="true" class="slds-path__link" href="#" id="path-1" role="option" tabindex="0">
+                				<span class="slds-path__stage">
+                  					<span class="slds-assistive-text">Current Stage:</span>
+                				</span>
+                				<span class="slds-path__title">{!item + ' '}</span>
+              				</a>
+            			</li>
+                           </aura:iteration>
+                  </ul>
+                             
+                  </div>
+                </div>
+              </div>
+          </div>
+    </div>
+    
+    
+   <!-- <aura:attribute name="show" type="Boolean" default="false"/>
+
+    <aura:if isTrue ="{!v.show}">
+
+       <lightning:dualListbox name="SObject Fields "
+                           label= "Select Fields"
+                           sourceLabel="Available"
+                           selectedLabel="Selected"
+                           fieldLevelHelp="Select your preferred languages"
+                           options="{!v.sfield}"
+                           onchange="{}"/>
+        <lightning:combobox name="objects" 
+            label="Picklist Values : "
+            value="{!v.selected}"
+            placeholder="None" 
+            options="{!v.sfield}" 
+            onchange="{!c.handleChange}"/>
+                           <br/>
+                           <button class="slds-button slds-button_inverse">Process</button>
+    </aura:if>  -->                     
+       
+    
+    
+</aura:component>

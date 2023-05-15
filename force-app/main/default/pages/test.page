@@ -1,0 +1,12 @@
+<apex:page >
+  <!--  <h1 style= "font-size : 100px;">-->
+        <apex:tabPanel contentStyle="font-size : 80px;">
+              
+            <apex:tab label="sObject Details" style="font-size : 20px;  width:200%;">
+              
+            </apex:tab>
+      
+            </apex:tabPanel>
+    <!--</h1>-->
+    font-size : 20px;
+</apex:page>

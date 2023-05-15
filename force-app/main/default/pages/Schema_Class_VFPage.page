@@ -1,0 +1,34 @@
+<apex:page controller="Schema_Class_Pagination">
+    <apex:form >
+   		<apex:pageBlock id="AllObjectsList">
+    		<h1><apex:outputlabel value="Select Object:- "/></h1>      
+        	<apex:selectList value="{!SelectedObject}" id="ObjPickList" size="1">
+                <apex:actionSupport event="onchange" action="{!field}" reRender="ex,AllFieldPickList1,AllFieldPickList2,add,remove,process"/>
+       			<apex:selectOptions value="{!SobjectList}"/>
+    		</apex:selectList>
+            &nbsp;
+            <apex:commandButton value="Reset" reRender="AllFieldPickList1,AllFieldPickList2,add,remove,process,table" action="{!reset}" style="width:10%"/><hr/><br/>
+            <apex:selectList title="Available Fields" value="{!fields1}" id="AllFieldPickList1" size="9" style="width:30%" multiselect="true" >
+       			<apex:selectOptions value="{!fieldsList}"/>
+    		</apex:selectList>
+            &nbsp;
+            <apex:commandButton value="Add" id="add" action="{!add}" disabled="{!disabledAdd}" reRender="AllFieldPickList1,AllFieldPickList2,add,remove,process" />&nbsp;
+            <apex:commandButton value="Remove" id="remove" action="{!remove}" disabled="{!disabledRemove}" reRender="AllFieldPickList1,AllFieldPickList2,add,remove,process,table" />
+            &nbsp;
+            <apex:selectList title="Selected Fields" value="{!selectFields}" id="AllFieldPickList2" size="9" style="width:30%" multiselect="true" >
+       			<apex:selectOptions value="{!selectedFieldsList}"/>
+    		</apex:selectList>
+            <apex:outputlabel value="{!SelectedObject}" id="ex"/><br/>
+			<apex:commandButton value="Process" id="process" action="{!process}" disabled="{!disabledRemove}" reRender="AllFieldPickList1,AllFieldPickList2,add,remove,process,table" />
+ 		</apex:pageBlock>
+ 	</apex:form>
+	<apex:form >
+		<apex:pageblock >
+			<apex:pageBlockTable value="{!record}" var="rec" id="table">
+				<apex:repeat value="{!lstFlds}" var="fld">
+				<apex:column value="{!rec[fld]}"/>
+				</apex:repeat>
+			</apex:pageBlockTable>        
+		</apex:pageblock>
+	</apex:form>
+</apex:page>

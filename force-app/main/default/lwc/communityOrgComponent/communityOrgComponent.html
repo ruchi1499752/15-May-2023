@@ -1,0 +1,77 @@
+<template>
+    <h1>Salesforce To salesforce Integration</h1>
+    <br/>
+    <!-- <div if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </div> -->
+      <!-- DISPLAY FILE DATA -->
+      <div class="slds-page-header" >
+        <div class="slds-grid">
+            
+            <div class="slds-col slds-size_2-of-12" >
+                <lightning-button label="Upload New File" variant="brand" icon-name="utility:upload" onclick={uploadModal}></lightning-button>
+                <template if:true={ShowUploadFileModal}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-2" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                         <!-- modal header start -->
+                           <header class="slds-modal__header">
+                              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                                 <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                 <span class="slds-assistive-text">Close</span>
+                              </button>
+                              <h2 id="modal-heading-1" class="slds-text-heading_medium slds-hyphenate">Upload File</h2>
+                           </header>
+                       
+                           <!-- modal body start -->
+                           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                <lightning-input type="file" label="Choose File" accept="image/png, image/jpg, .doc, .docx, .pdf, .csv, .xlsx" onchange={handleFileUploaded}></lightning-input>
+                            </div>
+                 
+                           <!-- modal footer start-->
+                           <footer class="slds-modal__footer">
+                              <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                           </footer>
+                        
+                        </div>
+                     </section>
+                     <div class="slds-backdrop slds-backdrop_open"></div>
+
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-scrollable" style="height:20rem;width:100% ;">
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" >
+            <thead>
+                <tr class="slds-text-heading_small " >
+                    <th>File Name</th>
+                    <th style="padding-left: 620px;">File Type</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+                <template if:true={fileData}>
+                    <!-- <p>{fileData.filename}</p> -->
+                </template>
+                <template for:each={allFiles} for:item="item">
+                    <tr key={item.id}>
+                        <td class="slds-size_5-of-12" data-label = "Files Name">
+                            <lightning-icon icon-name="action:add_file" size="x-small" ></lightning-icon> &nbsp;&nbsp; {item.Title}
+                            <!-- {item.filename} -->
+                            
+                        </td>
+                        <td class="slds-size_5-of-12" data-label = "Files Name" style="padding-left: 640px;">
+                            {item.FileType}
+                            <!-- {item.fileType} -->
+                        </td>
+                        
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</template>

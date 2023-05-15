@@ -1,0 +1,132 @@
+<aura:component controller="ServerSideController" implements="flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:appHostable">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="availableObject" type="List"/>
+    <aura:attribute name="options" type="list"/>
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/>   
+    <aura:attribute name="selectedFields" type="List" />
+    <aura:attribute name="selectedObject" type="Object"/>
+    <aura:attribute name="header" type="List"/>
+    <aura:attribute name="records" type="List"/>
+    <aura:attribute name="recordSizePerPage" type="integer" default="10"/>
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>  
+    <aura:attribute name="selectedTabsoft" type="string" default="Name" description="Use for show/hide arraow sign on header based on conditions"/>  
+    <aura:attribute name="page" type="integer"  default="1" description="using for store current page Number"/>  
+    <aura:attribute name="LastPage" type="integer" description="using for store All Pages page Number"/>  
+    <aura:attribute name="total" type="integer" description="total records count store"/>  
+    <aura:attribute name="show" type="boolean"/>
+    
+    <lightning:spinner aura:id="mySpinner" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
+    
+    <!--*****************Object Selection***********************************-->
+    
+    <div class="slds-p-around_xx-large" style="height:16rem;width:50rem">
+        <div class="slds-p-around_xx-large">
+            <lightning:Select class="slds-m-bottom_small" label="Select Object:" aura:id="InputSelectSingle" onchange="{!c.onSingleSelectChange}">
+                <aura:iteration items="{!v.availableObject}" var="mapKey" indexVar="key">
+                    <option text="{!mapKey.value}" value="{!mapKey.key}"/>
+                </aura:iteration>
+            </lightning:Select>
+        </div>
+    </div>
+    
+    <!--Fields Selection-->
+    &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+ 
+
+                
+                <div class="slds-p-around_xx-large">
+                       <aura:if isTrue="{!not(empty(v.selectedObject))}">
+                    <div>
+                    <lightning:dualListbox name="fields"  
+                                           label= "Fields" 
+                                           sourceLabel="Available" 
+                                           selectedLabel="Selected"
+                                           value="{!v.selectedFields}"
+                                           fieldLevelHelp="This is a dual listbox" 
+                                           options="{!v.options}" 
+                                           />
+                    <br/> 
+        </div>
+                      </aura:if>
+          
+  
+    
+    <aura:if isTrue="{!not(empty(v.selectedFields))}">
+       <div>                <lightning:button variant="brand" label="Process" onclick="{!c.getSelectedItems }"/></div>
+
+           
+    </aura:if>
+    </div>
+   
+    
+    
+    
+    <aura:if isTrue="{!not(empty(v.records))}">
+        <div>
+            
+            <!-- display total record and selected record count -->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+            <p class="slds-page-header__title slds-truncate">
+                <span>
+                    Page  {!v.page} / {!v.total}
+                </span>
+            </p>
+            <br/>
+            <form class="slds-form--stacked">  
+                <div class="slds">  
+                    <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal"><!--Table must be responsive-->  
+                        <thead>
+                            
+                            <tr class="slds-text-title--caps">
+                                <aura:iteration aura:id="iteration" items="{!v.header}" var="mapKey" indexVar="key"> 
+                                    <th scope="col"> 
+                                        <a onclick="{!c.sortColumn}" data-record-id="{!join(',',mapKey.key,mapKey.value)}">{!mapKey.value}
+                                            <aura:if isTrue="{!(v.arrowDirection == 'arrowdown')}"> </aura:if> 
+                                            <aura:if isTrue="{!(v.arrowDirection != 'arrowdown') }">  </aura:if>    
+                                        </a>
+                                    </th>
+                                </aura:iteration>
+                            </tr>
+                            
+                        </thead>
+                        <tbody>  
+                            <aura:iteration items="{!v.records}" var="rec">  
+                                <tr class="slds-hint-parent">  
+                                    <aura:iteration items="{!rec}" var="data">
+                                        
+                                        <td>{!data}</td>  
+                                    </aura:iteration>
+                                </tr>  
+                            </aura:iteration>  
+                        </tbody>
+                    </table> 
+                </div>  
+            </form>
+            <br/>
+            <br/>
+            <div class="slds-grid slds-grid_align-spread">
+                <div class="slds-col slds-page-header__title slds-truncate">
+                    <span>
+                        <ui:inputSelect aura:id="recordSize"  label="Display Record Per Page:" class="testDiv" change="{!c.onSelectChange}">
+                            <ui:inputSelectOption text="10" label="10" value="true"/>
+                            <ui:inputSelectOption text="15" label="15"/>
+                            <ui:inputSelectOption text="20" label="20"/>
+                        </ui:inputSelect>
+                    </span>
+                </div>
+                <div class="slds-col">
+                    <span>
+                        <lightning:button disabled="{!v.page == 1}" onclick="{!c.gotoFirstPage}" class="slds-button slds-button--neutral" label="First" variant="brand"/>  
+                        <lightning:button disabled="{!v.page == 1}" onclick="{!c.previousPage}" class="slds-button slds-button--neutral" label="Previous" variant="brand"/>  
+                        <lightning:button disabled="{!v.page == v.LastPage}" aura:id="nextbtn" class="slds-button slds-button--neutral" onclick="{!c.nextPage}" label="Next" variant="brand"/>  
+                        <lightning:button disabled="{!v.page == v.LastPage}" onclick="{!c.gotoLastPage}" class="slds-button slds-button--neutral" label="Last" variant="brand"/>              
+                    </span>
+                </div> 
+            </div>
+        </div>
+    </aura:if>
+    
+</aura:component>

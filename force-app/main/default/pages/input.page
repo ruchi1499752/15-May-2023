@@ -1,0 +1,11 @@
+<apex:page sidebar="false" standardController="Position__c">
+    <apex:pageBlock >
+        <apex:pageBlockSection >
+            <apex:form >
+                Name: <apex:inputField value="{!Position__c.name}"/><br/>
+                Name : <apex:inputText value="{!Position__c.name}"/>
+                <h1>Ruchi </h1>
+            </apex:form>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

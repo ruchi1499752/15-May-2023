@@ -1,0 +1,16 @@
+<!-->Display sObject Record on Visualforce Page Using Controller.<-->
+<apex:page controller="MyMerchandise">
+    <apex:pageBlock title="Merchandise">
+        <apex:pageBlockSection title="Merchandise Records">
+            <apex:pageBlockTable value="{!merchandiseList}" var="item">
+                <apex:column value="{!item.Name}"/>
+                <apex:column value="{!item.Job_Description__c}"/>
+                 <apex:column value="{!item.Total_Inventory__c}"/>
+                <apex:column value="{!item.Price__c}"/>
+                
+               
+                
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

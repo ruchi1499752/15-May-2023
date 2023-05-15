@@ -1,0 +1,18 @@
+<template>
+       <!-- <h1>Screen Flow Assignment</h1>  -->
+       <div style="height: 300px;">
+            <lightning-datatable
+                    key-field="id"
+                    data={data}
+                    columns={columns}
+                    max-row-selection="1"
+                    show-row-number-column = "false"  
+                    selected-rows ={selected}
+                    onrowselection={selectedRows}>
+            </lightning-datatable>
+            
+    </div>
+
+        <!-- <lightning-button label="Case Origin" onclick={caseOrigin}></lightning-button> -->
+</template>
+<!-- selected-rows={selectedRows} -->

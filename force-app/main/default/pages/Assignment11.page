@@ -1,0 +1,60 @@
+<apex:page >
+   <apex:form >
+       <apex:pageBlock >
+           <apex:pageBlockSection >
+               <b>
+                   <h1>
+                       Implement Master and Child checkbox functionality using javascript
+                   </h1>
+               </b>
+           </apex:pageBlockSection>
+       </apex:pageBlock>
+    </apex:form>
+    
+    
+    	
+    	
+   <div style="margin-left : 400px">
+		<label class="select-option">Master Checkbox</label>
+        <input type="checkbox" name="" id="master" onclick="fun()"/>
+		<br/><br/>
+
+		<label>Child - 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox"  id="A" onclick="fun2()"/>
+        <br/>
+		<label>Child - 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox"  name="" id="B" onclick="fun2()"/>
+        <br/>
+		<label>Child - 3</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="" id="C" onclick="fun2()"/>
+        <br/>
+		<label>Child - 4</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox"  name="" id="D" onclick="fun2()"/>
+		<br/>
+		<label>Child - 5</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="" id="E" onclick="fun2()"/>
+	</div>
+	
+    <script >
+		function fun(){
+			A.checked = master.checked;
+			B.checked = master.checked;
+			C.checked = master.checked;
+			D.checked = master.checked;
+			E.checked = master.checked;
+			
+		}
+		function fun2(){
+            if(A.checked == true && B.checked == true && c.checked == true && D.checked == true && E.checked == true){
+                master.checked = true;
+            }else{
+            	master.checked = false;
+            }
+        }	
+
+	</script>
+
+   
+    
+   
+</apex:page>

@@ -1,0 +1,9 @@
+<template>
+    <h1>Pass Value From Flow to LWC</h1>
+    <p>{inputValue}</p>
+    <br/> 
+    <p>Name : {name}</p>
+    <template for:each={strArray} for:item="res">
+        <p key={res}> {res}</p>
+    </template>
+</template>

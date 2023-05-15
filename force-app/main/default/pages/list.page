@@ -1,0 +1,29 @@
+<apex:page controller="sample">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:dataList value="{!LMN}" var="list">
+                    <apex:outputText value="{!list}"/>
+               
+                </apex:dataList>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:commandButton action="{!page1}" value="Click me" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:dataList value="{!ABC}" var="lst">
+                    <apex:outputText value="{!lst}"/>
+                </apex:dataList>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:commandButton value="Click me"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,127 @@
+<apex:page controller="CustomPaginationClass">
+    <apex:form >
+	<!-- alphabetic search-->
+	<div align="right">
+        <apex:panelGrid >
+        
+            <apex:repeat value="{!alphabet}" var="alph">
+                <apex:commandLink value="{!alph} | " action="{!getalphaSearch}" reRender="table">
+                <apex:param name="a" value="{!alph}" assignTo="{!alphaSearchConct}"/>
+                </apex:commandLink>
+            </apex:repeat>
+        
+        </apex:panelGrid>
+    </div>   
+        
+    <apex:PageBlock id="table">
+        
+        <apex:PageBlockTable value="{!ContactList}" var="contacts" >
+            
+            
+            <apex:column value="{!contacts.FirstName}">
+                <apex:facet name="header">   
+           			<apex:commandLink action="{!ViewCol}"  value="First Name{!IF(sortExpression=='FirstName',IF(sortDirection='ASC','▼','▲'),'')}" >
+                        
+             			<apex:param value="FirstName" name="column" assignTo="{!sortExpression}" ></apex:param>
+           			</apex:commandLink>
+         		</apex:facet>
+                <!--<apex:outputLink value="/{!contacts.id}">
+                	{!contacts.name}
+                </apex:outputLink>-->
+                
+            </apex:column>
+            
+            <apex:column value="{!contacts.LastName}">
+                <apex:facet name="header">   
+           			<apex:commandLink action="{!ViewCol}"  value="Last Name{!IF(sortExpression=='LastName',IF(sortDirection='ASC','▼','▲'),'')}">
+                        
+             			<apex:param value="LastName" name="column" assignTo="{!sortExpression}" ></apex:param>
+           			</apex:commandLink>
+         		</apex:facet>
+                
+            </apex:column>
+            
+            
+            <apex:column value="{!contacts.Title}">
+          <apex:facet name="header">
+           <apex:commandLink action="{!ViewCol}" value="Title{!IF(sortExpression=='Title',IF(sortDirection='ASC','▼','▲'),'')}">
+             <apex:param value="Title" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+       </apex:column>
+            
+           
+            
+       <apex:column value="{!contacts.phone}">
+          <apex:facet name="header">
+           <apex:commandLink action="{!ViewCol}" value="phone{!IF(sortExpression=='phone',IF(sortDirection='ASC','▼','▲'),'')}">
+             <apex:param value="phone" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+       </apex:column>
+            
+            
+        <apex:column value="{!contacts.email}">
+          <apex:facet name="header">
+           <apex:commandLink action="{!ViewCol}" value="email{!IF(sortExpression=='email',IF(sortDirection='ASC','▼','▲'),'')}">
+             <apex:param value="email" name="column" assignTo="{!sortExpression}" ></apex:param>
+           </apex:commandLink>
+         </apex:facet>
+       </apex:column>
+                
+
+           
+        </apex:PageBlockTable>
+    
+        
+     
+        
+    <!-- below code for pagination -->
+        
+        
+        
+    <div align ="center" id="button">
+        	<!-- display a list for number of records to be selected per page-->
+            <span style = "float:left">
+                <apex:outputLabel value="Page ">
+                </apex:outputLabel>
+                <apex:InputText value="{!PageNumber}" maxLength="4" size="1"/>
+                <!-- To navigate to the page-->           
+                <apex:outputLabel value=" of {!TotalPages}">
+                </apex:outputLabel>
+            </span>
+        
+        	<span style="float:left; margin-left:100px;">
+				<apex:outputLabel > Selected</apex:outputLabel>                
+        	</span>
+        
+        
+        
+           <!-- To return to first page of records-->
+           <apex:commandButton action="{!stdSetController.first}" value="First" title="First Page" disabled="{!!stdSetController.HasPrevious}" reRender="table,button"/>
+           <!-- To return to Previous page of records-->
+           <apex:commandButton action="{!stdSetController.previous}" value="Previous" disabled="{!!stdSetController.HasPrevious}" reRender="table,button"/>
+           <!-- To return to next page of records-->
+           <apex:commandButton action="{!stdSetController.next}" value="Next" disabled="{!!stdSetController.HasNext}" reRender="table,button"/>
+           <!-- To return to last page of records-->
+            <apex:commandButton action="{!stdSetController.last}" value="Last" title="Last Page" disabled="{!!stdSetController.HasNext}" reRender="table,button"/>
+           <!-- InputText to display current page and to navigate to any page number, At righmost side of page-->
+        
+           
+
+        	<span style="float:right">
+               <apex:outputLabel value="Record Per Page : ">
+                <apex:SelectList value="{!RecordsPerPageslist}" size="1">
+                    <apex:selectOptions value="{!RecordsPerPageOptionList}">    
+                    </apex:selectOptions>
+                    <apex:actionSupport event="onchange" reRender="table"/>
+                </apex:SelectList>
+               </apex:outputLabel>
+          	 </span>
+        
+        
+     </div>
+
+</apex:PageBlock>
+</apex:form>
+</apex:page>

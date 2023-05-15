@@ -1,0 +1,97 @@
+<template>
+    <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Description of icon when needed">
+                    <lightning-icon icon-name=standard:visualforce_page variant="bare" size="large"></lightning-icon>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <h1>Client Side Pagination</h1>
+                <h1>{selectedObj}</h1>
+            </div>
+        </div>
+    </div>   
+    <br/>
+    <div  class="slds-m-left_medium" style="width: 30%;">
+        <h1>Select Object</h1>
+        <lightning-combobox
+            name="Object List"
+            label=""
+            value={selectedObj}
+            placeholder="None"
+            options={objList}
+            onchange={handleChange} >
+        </lightning-combobox>
+    </div>
+    <br/>
+    <div class="slds-m-left_medium">
+        <template if:true={showFields} >
+            <lightning-dual-listbox name="languages"
+                label="Select Fields"
+                source-label="Available Fields"
+                selected-label="Selected Field"
+                field-level-help=""
+                options={fieldsList}
+                onchange={handleFieldsChange}>
+            </lightning-dual-listbox>
+            <br/>
+            <lightning-button 
+                variant="brand" 
+                label="Process" 
+                title="" 
+                onclick={handleFetchRecords}>
+            </lightning-button>
+        </template>
+    
+    <br/>
+    <template if:true={showTable}>
+        <br/>
+        <div style="height: 300px;border: 2px solid black;">
+            <lightning-datatable 
+                    key-field="id"
+                    data={displayRecords}
+                    columns={columns}
+                    sorted-direction={sortedDirection}
+                    onsort={onSort}
+                    sorted-by={sortedBy}
+                    data-id="datarow"
+                    
+                    selected-rows ={selected}
+                    onrowselection={selectedRows}>
+            </lightning-datatable>
+        </div>
+    </template>
+    </div>
+    <br/><br/>
+
+<!-- Display Record Per page, Buttons and Page Number -->
+    <template if:true={showTable}>
+        <div class="slds-grid slds-gutters slds-m-left_medium" >
+            <div class="slds-col slds-size_3-of-12" style="width:20%;">
+                <lightning-combobox
+                    name="progress"
+                    label="Record Per Page"
+                    value={recordSize}
+                    placeholder="Record Size"
+                    options={options}
+                    onchange={handleRecordSizeChange} >
+                </lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_7-of-12 " style="padding-left :320px; padding-top: 20px;" >
+                <lightning-button-group>
+                    <lightning-button label="First" name="First" variant="brand" onclick={handleNavigation} disabled={disablePreviousButtons}></lightning-button>
+                    <lightning-button label="Previous" name="Previous" onclick={handleNavigation} disabled={disablePreviousButtons}></lightning-button>
+                    <template iterator:it={pageList}>
+                        <lightning-button key={it.value} label={it.value} onclick={process}></lightning-button>
+                    </template>
+                    <lightning-button label="Next" name="Next" onclick={handleNavigation} disabled={disableNextButtons}></lightning-button>
+                    <lightning-button label="Last" name="Last" variant="brand" onclick={handleNavigation}  disabled={disableNextButtons}></lightning-button>
+                </lightning-button-group>
+            </div>
+            <div class="slds-col slds-size_2-of-12" style="padding-top: 20px;">
+                <span>Page No : {pageNumber} / {totalPages}</span>
+            </div>
+        </div>
+    </template>
+</template>

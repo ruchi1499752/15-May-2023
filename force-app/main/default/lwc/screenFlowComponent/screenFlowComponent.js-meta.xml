@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Screen Flow Component</masterLabel>
+    <description>Screen Flow Component</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__Tab</target>
+        <target>lightning__AppPage</target>
+        
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name= "recordId" type="String" label="recordId" description="RecordId" />
+            <!-- <propertyType extends="SObject" name="T" /> -->
+            <property name="parentRecord" type="String" label="Return Parent Id" role="outputOnly" />
+            <property name="parentCaseNumber" type="String" label="Return Parent Case Number" role="outputOnly" />
+            <property name="parentOrigin" type="String" label="Return Parent Origin" role="outputOnly" />
+            <property name="ParentWebEmail" type="String" label="Return Parent Web Email" role="outputOnly" />
+            <property name="updateCaseOrigin" type="String" label="getCaseOriginValue" />
+            <!-- <property name="isSelect" type="Boolean"  label="Return Boolean value to select radio button or not" role="outputOnly"/> -->
+            <property name="isSelect" type="Boolean"  label="Get Boolean value to select radio button or not" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

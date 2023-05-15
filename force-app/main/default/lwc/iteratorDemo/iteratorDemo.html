@@ -1,0 +1,10 @@
+<template>
+    <h1>Iteration In LWC</h1>
+    <lightning-card title="For Each Demo" icon-name="standard:contact" class="slds-m-around_small">
+        <template for:each={contacts} for:item="item" for:index="index">     <!-- for:each : {array name }, for:item : "", for:index= "which index you iterate  "-->
+            <p key={item.id} class="slds-m-around_small">
+                {index} - {item.name} &nbsp; {item.email}
+            </p>
+        </template>
+    </lightning-card>    
+</template>

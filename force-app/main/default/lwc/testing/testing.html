@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title={title}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" padding="around-small">
+                <lightning-input type="text" name="FirstName" label="First Name" required></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+                <lightning-input type="text" name="LastName" label="Last Name" required></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+                <lightning-combobox label="Company" name="Company" placeholder="Select Company" options={companies} required></lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-button label="Click Me" onclick={handleClick}></lightning-button>
+        <div>{title}</div>
+        <p>{text}</p>
+        <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+            <lightning-record-edit-form object-api-name="Account">
+                <lightning-messages></lightning-messages>
+                <lightning-input-field field-name="Name"  variant="label-hidden"> </lightning-input-field>
+                <lightning-input-field field-name="Phone"> </lightning-input-field>
+               <!-- <lightning-input-field field-name="BillingAddress">
+                </lightning-input-field>
+                <lightning-button
+                    type="submit"
+                    name="submit"
+                    label="Create Account"
+                >
+                </lightning-button>-->
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,47 @@
+<apex:page controller="Customclass4">
+    <apex:form >
+        <apex:pageBlock title="Implement list view and spinner">
+            <apex:outputLabel >Filter :</apex:outputLabel>
+            	<apex:selectList value="{!options}" size="1" >
+                <apex:actionSupport event="onchange" reRender="info" status="PageStatus"/>
+                <apex:selectOptions value="{!lst}"/>   
+            </apex:selectList>
+            
+            <apex:actionStatus id="PageStatus" >
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <img src="/img/loading32.gif" width="25" height="25" />
+                            <apex:outputLabel value="Loading..."/>
+                        </apex:outputPanel>            
+                    </apex:facet>
+				</apex:actionStatus>
+            <!--<apex:selectList size="1">
+                <apex:selectOption itemValue="My" itemLabel="My Accounts" />
+                <apex:selectOption itemValue="All" itemLabel="All Accounts" />
+                <apex:actionSupport event="onChange" action="{!All}"/>
+            </apex:selectList>-->
+            
+            
+                <!--<apex:pageBlockSection id="info" >
+                    {!options}
+                </apex:pageBlockSection>-->     
+            
+            
+            <apex:pageBlockTable value="{!acc}" var="a" id="info" style="width:100%;">
+                <apex:column headerValue="Account Name"  >
+                    <apex:inputField value="{!a.name}"/>
+                </apex:column>
+                <apex:column headerValue="Account ID">
+                    <apex:inputField value="{!a.id}"/>
+                </apex:column>
+                <apex:column headerValue="Industry">
+                    <apex:inputField value="{!a.industry}"/>
+                </apex:column>
+                
+                <apex:column headerValue="Account Rating">
+                    <apex:inputField value="{!a.rating}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

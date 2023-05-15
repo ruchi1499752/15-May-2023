@@ -1,0 +1,5 @@
+<design:component label="Case DataTable">
+	<design:attribute name="recordId" label="recordId"/>
+    <design:attribute name="selectedRows" label="Selected Rows" description="Provide the values comma separated"/>
+    <design:attribute name="maxRowSelection" label="Max No of Records to be Selected" datasource="1,2,5,7,10,15"/>
+</design:component>

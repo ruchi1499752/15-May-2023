@@ -1,0 +1,18 @@
+<!--Display sObject Record on Visualforce Page Using Standard Controller. using pageBlockTable-->
+<apex:page standardController="Merchandise__c" recordsetVar="record">
+    <apex:form >
+        <apex:pageBlock title="Merchandise" >
+            <apex:pageBlockSection title="Merchandise Record">
+                <apex:pageBlockTable value="{!record}" var="item">
+                    <apex:column value="{!item.Name}"/>
+                    <apex:column headerValue="Job">
+                      	<apex:inputText value="{!item.Job_Description__c}"/>
+                    </apex:column>
+                    <apex:column value="{!item.Price__c}" />
+                    <apex:column value="{!item.Total_Inventory__c}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>

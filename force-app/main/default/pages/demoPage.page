@@ -1,0 +1,8 @@
+<apex:page standardcontroller="Position__c">
+  <apex:form >
+      Hello
+      This is My First Visualforce Page...
+      <b>{!Position__c.Name}</b> position.
+
+  </apex:form>    
+</apex:page>

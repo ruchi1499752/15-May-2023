@@ -1,0 +1,13 @@
+<template>
+    <lightning-card>
+        <template for:each={cases.data} for:item="item">
+            <p key={item.Id}>
+                {item.Subject} <br/>
+                {item.Status}
+            </p>
+        </template>
+        <template if:true={cases.error}>
+            <p>This is an error while fetching the case records</p>
+        </template>
+    </lightning-card>
+</template>

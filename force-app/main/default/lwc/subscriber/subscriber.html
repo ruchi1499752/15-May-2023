@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="LWC Publisher">
+        <!-- <div>{accountId}<br/>{objectApiName} <br/>{fields}</div> -->
+        
+
+        <p class="slds-p-horizontal_small">
+            
+            <lightning-record-form
+                record-id= {accountId}
+                object-api-name= {objectApiName}
+                fields={fields}
+                
+                columns="2"
+                mode = "view" 
+            ></lightning-record-form>
+        </p>
+    
+    </lightning-card>
+</template>

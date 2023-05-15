@@ -1,0 +1,17 @@
+<apex:page controller="ObjectName" readOnly="true">
+    <apex:form >
+   <apex:pageBlock id="AllObjectsList">
+    <apex:outputlabel value="Object Name"/>      
+        <apex:selectList value="{!SelectedObj}" id="ObjPickList" size="1">
+       <apex:selectOptions value="{!AllObjList}"/>
+    </apex:selectList>
+       <br/>
+       
+       <apex:outputlabel value="Fields Name"/>      
+        <apex:selectList value="{!SelectField}"  size="10">
+       <apex:selectOption value="{!AllFieldList}"/>
+    </apex:selectList>
+       
+ </apex:pageBlock>
+ </apex:form>
+</apex:page>

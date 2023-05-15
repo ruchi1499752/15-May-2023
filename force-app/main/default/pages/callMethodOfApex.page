@@ -1,0 +1,18 @@
+<apex:page controller="Demo">
+    <apex:form >
+  <apex:outputlabel > 
+     Enter Name 
+  </apex:outputlabel>
+	
+        <apex:inputtext value="{!name}"/>
+        {!name}
+        
+    <!--Using button :-->    
+    <apex:commandbutton value="click"  action="{!show}"/>
+        
+    <!--<apex:outputlabel id="one"> 
+      {!name} 
+    </apex:outputlabel>-->
+        
+  </apex:form>
+</apex:page>

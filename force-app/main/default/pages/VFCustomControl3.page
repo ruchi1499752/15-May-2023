@@ -1,0 +1,28 @@
+<apex:page controller="CustomClass3A">
+    <apex:form >
+        
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+            	<apex:commandButton action="{!saveRec}" value="save"/>
+                <apex:commandButton action="{!}" value="Quick Save"/>
+                  
+        	</apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!acc}" var="a">
+                <apex:column headerValue="Account Name">
+                    <apex:inputField value="{!a.name}"/>
+                </apex:column>
+                <apex:column headerValue="Account ID">
+                    <apex:inputField value="{!a.id}"/>
+                </apex:column>
+                <apex:column headerValue="Industry">
+                    <apex:inputField value="{!a.industry}"/>
+                </apex:column>
+                
+                <apex:column headerValue="Account Rating">
+                    <apex:inputField value="{!a.rating}"/>
+                </apex:column>
+                
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

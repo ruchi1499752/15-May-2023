@@ -1,0 +1,34 @@
+<aura:component  controller ="AccountController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:appHostable" access="global" >
+   <!-- <aura:attribute name="acctList" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+    
+     <h1><lightning:select class="setWidth" name="select1" label="Select an Account">
+        <option value="null">None</option>
+        <aura:iteration items="{!v.acctList}" var="acc">
+            <option value="{!acc.id}">{!acc.Name}</option>
+        </aura:iteration>
+         </lightning:select></h1>
+    
+    <aura:attribute name="ObjectList" type="List"/>
+    <h1>Select SObject : </h1>-->
+    <aura:attribute name="availableObject" type="map"/>
+    <div class="slds-p-around_xx-large" style="height:16rem;width:50rem">
+        <div class="slds-p-around_xx-large">
+            <lightning:Select class="slds-m-bottom_small" label="Select Object:" aura:id="InputSelectSingle" onchange="{!c.onSingleSelectChange}">
+                <aura:iteration items="{!v.availableObject}" var="mapKey" indexVar="key">
+                    <option text="{!mapKey.value}" value="{!mapKey.key}"/>
+                </aura:iteration>
+            </lightning:Select>
+        </div>
+    </div>
+    
+    <!--Fields Selection-->
+   
+    
+    
+       
+    
+   
+    
+    
+</aura:component>

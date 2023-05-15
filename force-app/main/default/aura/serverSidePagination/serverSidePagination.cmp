@@ -1,0 +1,12 @@
+<aura:component controller="serverSideApexController">
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="AccList" type="Account[]" />
+    <aura:attribute name="columns" type="List"/>
+    {!v.AccList}
+
+    
+
+
+</aura:component>

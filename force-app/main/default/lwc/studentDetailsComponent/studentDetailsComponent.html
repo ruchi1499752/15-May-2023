@@ -1,0 +1,41 @@
+<template>
+    
+    <lightning-card>
+        <h3 slot="title">
+            <lightning-icon icon-name="standard:account"></lightning-icon>
+            &nbsp;&nbsp; Student Information
+        </h3>
+
+       
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" aria-label="Example table of Opportunities with vertical borders">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <!-- <div class="slds-truncate" title="S.No.">S.No.</div> -->
+                        <template for:each={records} for:item="column">
+                            <th key={column.Id}><div class="slds-truncate">{column.Name}</div></th>
+                        </template>
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={records} for:item="student" for:index="index">
+                    <tr key={keyIndex}>
+                        <td>{index}</td>
+                        <td>{student.Name}</td>
+                        <td></td>
+
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+         <div  class="slds-card__footer">
+            <lightning-button label="Add Row" variant="brand" ></lightning-button>&nbsp;&nbsp;
+            <lightning-button label="Save Record " variant="brand"></lightning-button>
+        </div>
+
+    </lightning-card>
+</template>

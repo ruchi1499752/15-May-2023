@@ -1,0 +1,30 @@
+<!--<apex:page controller="PaginationController" readOnly="true">
+    <apex:form >
+        <apex:pageBlock >
+            
+                <apex:outputlabel value="Object Names :"/> 
+                <apex:selectList value="{!selectObj}" size="1">
+                    <apex:selectOptions value="{!objName}"/>
+                    <apex:actionSupport event="onclick" rendered="info"   />
+            	</apex:selectList>
+            
+           
+            <apex:pageBlockSection id="info">
+                
+                <apex:outputlabel value="Field Names :"/><br/>
+                <apex:selectList value="{!selectField}" size="20" >
+                    <apex:selectOptions value="{!ObjectFields}"/>
+                   	<apex:actionSupport event="onchange" />
+                        
+                
+                </apex:selectList>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>-->
+<apex:page standardController="Contact">
+    <apex:outputLink value="http://google.com/search">
+        Search Google
+        <apex:param name="q" value="{!contact.name}"/>
+    </apex:outputLink>
+</apex:page>

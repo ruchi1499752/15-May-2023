@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="heading" label="Enter the name of the tutorial"/>
+    <design:attribute name="topic" label="Enter the topic"/>
+    <design:supportedFormFactors>
+	<design:supportedFormFactor type="Large"/>
+	<design:supportedFormFactor type="Small"/>
+</design:supportedFormFactors>
+</design:component>

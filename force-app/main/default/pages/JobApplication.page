@@ -1,0 +1,35 @@
+<apex:page standardController="Job_Application__c" sidebar="false">
+    <apex:pageBlock title="Owner">
+        <apex:pageBlockSection title="Owner Detail">
+            <p>
+                Job Application Detail is - {Owner} : {!Job_Application__c.Owner.Name}
+            </p>
+        </apex:pageBlockSection>
+        
+        
+        <apex:pageBlock title="Job Application">
+            <apex:pageBlockSection title="Record Detail">
+                <p>
+                    Job Application Details is - {Name} : {!Job_Application__c.Name} 
+                   
+                </p>
+                <p>
+                     Job Application Details is - {Status} : {!Job_Application__c.Status__c}
+                </p>
+                <p>
+                    Job Application Details is - {Cover Letter} : {!Job_Application__c.Cover_Letter__c}
+                </p>
+                
+            </apex:pageBlockSection>
+            
+            <apex:pageBlock title="Master Object">
+                <apex:pageBlockSection title="Candidate Object detail ">
+                    Job Application Detail is - {Master Candidate-Name} : {!Job_Application__c.Candidate__r.Name}<br/>
+                    Job Application Detail is - {Master Candidate-City} : {!Job_Application__c.Candidate__r.City__c}<br/>
+                    Job Application Detail is - {Master Candidate-City} : {!Job_Application__c.Candidate__r.City__c}<br/>
+                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:pageBlock>
+    </apex:pageBlock>
+</apex:page>

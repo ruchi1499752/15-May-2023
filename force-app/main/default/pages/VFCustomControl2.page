@@ -1,0 +1,20 @@
+<apex:page controller="CustomClass2">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!saveRecord}" value="Save"/>
+                <apex:commandButton action="{!quick}" value="Quick Save"/>
+                 <apex:commandButton action="{!cancel}" value="Cancel" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection >
+                
+                <apex:inputField value="{!Pos.name}"/>
+                <apex:inputField value="{!Pos.id}"/>
+                <apex:inputField value="{!Pos.Functional_Area__c}"/>
+                <apex:inputField value="{!Pos.Location__c}"/>
+                
+            </apex:pageBlockSection>
+           
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

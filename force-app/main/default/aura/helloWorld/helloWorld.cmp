@@ -1,0 +1,125 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+   <!-- <h1 class="c1">Ruchi Chourasia</h1>	<br/>
+    
+    <div class="colr">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+    </div>
+    <lightning:button ></lightning:button>-->
+    <aura:attribute name="message" type="String" default="Ruchi"/>
+    {!v.message}
+    <p>{!'Hello! ' + v.message}</p>
+	<br/>
+   <!-- <c:contactList1 msg="{!v.message}"/>-->
+   <!-- <c:helloMessage  message="You look nice today."/>
+    <c:helloMessage message="{!v.message}"/>
+    
+    <lightning:input type="text"
+                         label="Name"
+                         name="Name"
+                          />
+    <br/>
+    <aura:attribute name="message1" type="List" default="['You look nice today.',
+            'Great weather we\'re having.',
+            'How are you?']"/>
+    
+    
+    {!v.message1[1]}
+    <aura:iteration items="{!v.message1}" var="msg">
+        <p>{!msg}</p>
+    </aura:iteration>    
+    
+    <aura:attribute name="Acc" type="Account" default="{'sobjectType' : 'Account', 'Name' : 'Test Account1', 'Industry' : 'abc'}"/>
+    {!v.Acc.Name}<br/>
+    {!v.Acc.Industry}-->
+    
+    <br/><br/>
+    
+    <c:helloMessageInteractive/>
+    <br/>
+
+    <!-- Base variant: Makes a button look like a link -->
+    <lightning:button variant="base" label="Base" title="Base action" onclick="{! c.handleClick }"/>
+
+    <!-- Neutral variant (default) -->
+    <lightning:button label="Neutral" title="Neutral action" onclick="{! c.handleClick }"/>
+
+    <!-- Brand variant: Identifies the primary action in a group of buttons -->
+    <lightning:button variant="brand" label="Brand" title="Brand action" onclick="{! c.handleClick }" />
+
+    <!-- Brand-outline variant: Identifies the primary action in a group of buttons, but has a lighter look -->
+    <lightning:button variant="brand-outline" label="Brand Outline" title="Brand action" onclick="{! c.handleClick }" />
+
+    <!-- Destructive variant: Identifies a potentially negative action -->
+    <lightning:button variant="destructive" label="Destructive" title="Destructive action" onclick="{! c.handleClick }"/>
+
+    <!-- Destructive-text variant: Identifies a potentially negative action, but has a lighter look -->
+    <lightning:button variant="destructive-text" label="Destructive Text" title="Destructive action" onclick="{! c.handleClick }"/>
+
+    <!-- Success variant: Identifies a successful action -->
+    <lightning:button variant="success" label="Success" title="Success" onclick="{! c.handleClick }"/>
+
+    <br/>
+      <!-- PAGE HEADER -->
+    <lightning:layout class="slds-page-header slds-page-header_object-home">
+        <lightning:layoutItem>
+            <lightning:icon iconName="standard:scan_card" alternativeText="Pagination"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="page-section page-header">
+                <h1 class="slds-text-heading_label">Pagination</h1>
+                <h2 class="slds-text-heading_medium">Pagination</h2>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+    <!-- NEW EXPENSE FORM -->
+    <lightning:layout>
+        <lightning:layoutItem padding="around-small" size="6">
+        <!-- [[ expense form goes here ]] -->
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / NEW EXPENSE FORM -->
+
+	<!-- CREATE NEW EXPENSE -->
+    <div aria-labelledby="newexpenseform">
+        <!-- BOXED AREA -->
+        <fieldset class="slds-box slds-theme_default slds-container_small">
+        <legend id="newexpenseform" class="slds-text-heading_small
+          slds-p-vertical_medium">
+          Add Expense
+        </legend>
+        <!-- CREATE NEW EXPENSE FORM -->
+        <form class="slds-form_stacked">
+            <lightning:input aura:id="expenseform" label="Expense Name"
+                             name="expensename"
+                             value="{!v.newExpense.Name}"
+                             required="true"/>
+            <lightning:input type="number" aura:id="expenseform" label="Amount"
+                             name="expenseamount"
+                             min="0.1"
+                             formatter="currency"
+                             step="0.01"
+                             value="{!v.newExpense.Amount__c}"
+                             messageWhenRangeUnderflow="Enter an amount that's at least $0.10."/>
+            <lightning:input aura:id="expenseform" label="Client"
+                             name="expenseclient"
+                             value="{!v.newExpense.Client__c}"
+                             placeholder="ABC Co."/>
+            <lightning:input type="date" aura:id="expenseform" label="Expense Date"
+                             name="expensedate"
+                             value="{!v.newExpense.Date__c}"/>
+            <lightning:input type="checkbox" aura:id="expenseform" label="Reimbursed?"
+                             name="expreimbursed"
+                             checked="{!v.newExpense.Reimbursed__c}"/>
+            <lightning:button label="Create Expense"
+                              class="slds-m-top_medium"
+                              variant="brand"
+                              onclick="{!c.clickCreate}"/>
+        </form>
+        <!-- / CREATE NEW EXPENSE FORM -->
+      </fieldset>
+      <!-- / BOXED AREA -->
+    </div>
+    <!-- / CREATE NEW EXPENSE -->    
+    
+</aura:component>

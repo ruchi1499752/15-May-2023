@@ -1,0 +1,25 @@
+<aura:component implements="force:appHostable">
+    
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="show" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+  
+    <lightning:layout>
+        <lightning:layoutItem padding="around-large">
+        <h1 class="slds-text-heading_large ">SERVER SIDE PAGINATION</h1>
+            
+        </lightning:layoutItem>
+    </lightning:layout>
+  
+     <!--Header part-->
+     <div class="slds-page-header" role="banner">
+        <div>
+            <p class="slds-page-header__title slds-truncate" >SObject : {!v.data.objectName}</p>
+        </div>
+    </div>
+    <!--Header part close-->
+    <aura:if isTrue="{!v.show}">
+        <c:child response="{!v.data}"></c:child>
+    </aura:if>
+</aura:component>	
+<!-- The action attribute of <aura:handler> sets the client-side controller action to handle the event. -->

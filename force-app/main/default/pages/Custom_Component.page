@@ -1,0 +1,7 @@
+<apex:page >
+    
+    <h1>
+        Ruchi chourasia
+    </h1>
+    <c:My_Component />
+</apex:page>

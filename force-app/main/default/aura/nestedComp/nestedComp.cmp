@@ -1,0 +1,7 @@
+<aura:component>
+    Observe! Components within components!
+  
+    <c:globalValueProviders whom="Component Composition"/>
+    <lightning:input type="number" name="Number" label="Pick a number :" value="54" />
+    <lightning:button name="submit" label="Submit" class="slds-m-around_medium"/>
+</aura:component>

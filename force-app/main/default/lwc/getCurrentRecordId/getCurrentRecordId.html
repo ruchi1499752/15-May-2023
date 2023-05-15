@@ -1,0 +1,25 @@
+<template>
+    
+    <lightning-card title="Object Info And LDS View Record">
+        <h1>Record Id ==> {recordId}</h1><br/>
+        <h1>Object API Name ==> {objectApiName}</h1>
+    
+    <br/>
+
+    
+    <!-- <div class="slds-m-around_medium">
+        <lightning-record-form record-id={recordId} object-api-name={objectApiName} layout-type="Full" mode="view" columns="2" ></lightning-record-form>
+    </div> -->
+    <br/>
+
+    <lightning-record-form
+        record-id={recordId}
+        object-api-name={objectApiName}
+        layout-type="Full"
+        fields={fields}
+        mode="edit"
+    ></lightning-record-form>
+    <!-- columns="2" -->
+    
+</lightning-card>
+</template>

@@ -1,0 +1,64 @@
+<apex:page controller="PageClass">
+    <apex:form >
+     <div align="right">
+        <apex:panelGrid >
+        
+            <apex:repeat value="{!alphabet}" var="alph">
+                <apex:commandLink value="{!alph} | " action="{!alphaSearch}" reRender="table">
+               <apex:param name="a" value="{!alph}" assignTo="{!alphaSearchConct}"/>
+                </apex:commandLink>
+            </apex:repeat>
+        
+        </apex:panelGrid>
+    </div>   
+        
+        <apex:pageBlock id="table" >
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockTable value="{!acc}" var="a" style="width:260%;">
+                    <apex:column value="{!a.name}"/>
+                    <apex:column value="{!a.id}"/>  
+                    <apex:column value="{!a.phone}"/>
+                    <apex:column value="{!a.website}"/>
+                    <apex:column value="{!a.Rating}"/>  
+                    
+                </apex:pageBlockTable>
+                
+          
+            </apex:pageBlockSection>
+            
+            <div align ="center" id="button">
+                    <!-- display a list for number of records to be selected per page-->
+                    <span style = "float:left">
+                        <apex:outputLabel value="Page ">
+                        </apex:outputLabel>
+                        <apex:InputText value="{!PageNumber}" maxLength="4" size="1" />
+                        <!-- To navigate to the page-->           
+                        <apex:outputLabel value=" of ">
+                        </apex:outputLabel>
+                    </span>
+        
+                    <!-- To return to first page of records-->
+                    <apex:commandButton action="{!std.first}" value="First" title="First Page" reRender="table,button"/>
+                    <!-- To return to Previous page of records-->
+                    <apex:commandButton action="{!std.previous}" value="Previous"  reRender="table,button"/>
+                    <!-- To return to next page of records-->
+                    <apex:commandButton action="{!std.next}" value="Next"  reRender="table,button"/>
+                    <!-- To return to last page of records-->
+                    <apex:commandButton action="{!std.last}" value="Last" title="Last Page"  reRender="table,button"/>
+                    <!-- InputText to display current page and to navigate to any page number, At righmost side of page-->
+                         
+                
+                	<span style="float:right">
+               <apex:outputLabel value="Record Per Page : ">
+               <apex:SelectList value="{!RecordsPerPageOptionList}"  size="1">
+                    <apex:selectOptions value="{!RecordsPerPageOptionList}" >    
+                    </apex:selectOptions>
+                    <apex:actionSupport event="onchange" reRender="table"/>
+                </apex:SelectList>
+               </apex:outputLabel>
+          	 </span>
+          </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

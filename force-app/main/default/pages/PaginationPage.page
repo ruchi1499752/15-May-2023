@@ -1,0 +1,64 @@
+<apex:page controller="Pagination">
+<apex:form >
+	<apex:pageBlock id="details" >
+       
+		<!--<apex:outputLabel >Filter :</apex:outputLabel>
+            	<apex:selectList value="{!options}" size="1" >
+                <apex:actionSupport event="onchange" reRender="info" status="PageStatus"/>
+                <apex:selectOptions value="{!lst}"/>   
+       </apex:selectList>-->	
+        <br/>
+        
+		<apex:pageblockTable value="{!Acclist}" var="acc" id="info">
+            <apex:column value="{!acc.Name}"/>
+            <apex:column value="{!acc.id}"/>
+            <apex:column value="{!acc.industry}"/>
+            <apex:column value="{!acc.Rating}"/>
+
+		</apex:pageblockTable>
+        
+		<apex:actionStatus id="PageStatus" >
+            <apex:facet name="start">
+                <apex:outputPanel >
+                    <img src="/img/loading32.gif" width="25" height="25" />
+                    <apex:outputLabel value="Loading..."/>
+                </apex:outputPanel>            
+            </apex:facet>
+	    </apex:actionStatus>
+        
+		
+        <br/>
+        <table style="width: 100%">
+                <tr>
+                    <td>
+                        Page: <apex:outputText value=" {!PageNumber} of {!PageSize}"/>
+                        
+                    </td>
+                    <td align="center" >
+                        
+                            <apex:commandButton value="First Page" rerender="details" action="{!FirstPage}" />
+                            <apex:commandButton value="Previous" rerender="details" action="{!previous}"/>
+                            <apex:commandButton value="Next" rerender="details" action="{!next}"/>
+                            <apex:commandButton value="Last Page" rerender="details" action="{!LastPage}"/>
+        				
+                    </td>
+                    <td align="right" >
+                        
+                      
+            	 Record Per Page :<apex:selectList value="{!PSize}" size="1" >
+               
+                		<apex:selectOptions value="{!PerPageRecord}"/>   
+                         <apex:actionSupport event="onchange" reRender="info" status="PageStatus"/>
+       			</apex:selectList>
+                         
+                        <!--<apex:selectList value="{!PageSize}" size="1">
+                       
+                            Record Per Page :<apex:selectOption itemValue="10" itemLabel="10"/>
+                        	<apex:actionSupport event="onchange" />
+                        </apex:selectList>-->
+                    </td>
+            </tr>
+         </table>
+	</apex:pageBlock>
+   </apex:form>
+</apex:page>

@@ -1,0 +1,53 @@
+<apex:page controller="PaginationClass" tabStyle="Account">
+    <apex:form >
+        <apex:pageBlock >
+            <!--<h1>Ruchi Chourasia</h1>-->
+            <apex:pageBlockSection title="Account Records">
+                <apex:PageBlockTable value="{!AccRec}" var="a" style="width:260%;">
+                    <apex:column value="{!a.name}"/>
+                    <apex:column value="{!a.id}"/>
+                    <apex:column value="{!a.industry}"/> 
+                    <apex:column value="{!a.Rating}"/>    
+                </apex:PageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        
+        
+        <table style="width: 100%">
+                <tr>
+                    <td>
+                        <!--Page: of {!noOfRec}-->
+                        <!--Page :<apex:outputText >{!(sc.pageNumber * size)+1-size}-{!IF((sc.pageNumber * size)>noOfRec, noOfRec,
+                     (sc.pageNumber * size))} of {!noOfRec}
+                </apex:outputText>--> 
+                        
+                    </td>
+                    <td align="center" >
+                        
+                       	<apex:commandButton action="{!first}" value="First"/>
+        				<apex:commandButton action="{!pre}" value="Previous"/>
+        				<apex:commandButton action="{!next}" value="Next"/>
+        				<apex:commandButton action="{!lst}" value="Last"/>
+        
+        				
+                    </td>
+                    <td align="right" >
+                        
+                      
+            			Record Per Page :
+                        <apex:selectList value="{!size}" size="1" >
+            			    <apex:selectOption value="{!pageSize}"/>
+            
+                        </apex:selectList>
+               
+                		
+                         
+                      
+                    </td>
+            </tr>
+         </table>
+        
+    </apex:form>
+    
+</apex:page>

@@ -1,0 +1,26 @@
+<aura:component implements="lightning:availableForFlowScreens" controller="GetCaseRecords" access="global">
+	
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedRows" type="String"/>
+    <aura:attribute name="maxRowSelection" type="String"/>
+    <aura:attribute name="recordId" type="String" access="global"/>
+    
+    <aura:attribute name="selectedRowsList" type="String"/>
+	<!-- handlers -->
+	<aura:attribute name="validate" type="Aura.Action"
+                    description="Custom validation function to run when the flow is navigated to the next screen.
+                                    The function must evaluate the component and return values for isValid and
+                                    errorMessage."/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<lightning:datatable
+                          keyField="id"
+                          data="{!v.data}"
+                          columns="{!v.columns}"
+                          selectedRows="{!v.selectedRowsList}"
+                          maxRowSelection="{!v.maxRowSelection}"
+                          onrowselection="{!c.getSelectedRecord}"/>
+    
+</aura:component>

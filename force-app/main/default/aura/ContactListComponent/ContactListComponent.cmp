@@ -1,0 +1,6 @@
+<aura:component implements="force:appHostable">
+	<h1>Ruchi Chourasia</h1>
+    <aura:attribute name="var1" type="String" default="Test Value">
+        Hello {!v.var1}
+    </aura:attribute>
+</aura:component>

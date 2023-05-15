@@ -1,0 +1,16 @@
+<template>
+    <div style="height: 300px;">
+        <lightning-datatable
+                key-field="id"
+                data={data}
+                columns={columns}
+                hide-checkbox-column>
+        </lightning-datatable>
+    </div>
+    <div>
+        <lightning-button-group>
+            <lightning-button label="Edit" onclick={handleEdit}></lightning-button>
+            <lightning-button label="Save" onclick={handleSave}></lightning-button>
+        </lightning-button-group>
+    </div>
+</template>

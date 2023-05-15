@@ -1,0 +1,16 @@
+<aura:component>
+    <!--<aura:registerEvent name="cmpEvent" type="c:CompEvent"/>
+    <h1>Simple Component Event Sample</h1>
+    <p>
+        <lightning:button label="Click here to fire a component event" onclick="{!c.fireComponentEvent}"/>
+    </p>
+
+    <aura:attribute name="ChildValue" type="String"/>
+    <p>Child value : {!v.ChildValue} </p>-->
+
+    <aura:attribute name="childValue" type="Object"/>    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="msg" type="String" />
+       
+
+</aura:component>

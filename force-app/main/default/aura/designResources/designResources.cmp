@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:LightningQuickAction" access="global" >
+    <aura:attribute name="heading" type="String" default="Salesforce"/>
+    <aura:attribute name="topic" type="String" default="Design Resources"/>
+    <h1>Welcom to {!v.heading} Tutorial</h1>
+    <p>Topic : {!v.topic}</p>
+    
+    <lightning:input name="MyNumber" type="Number" aura:id="num1" label="Number 1"/>
+    <lightning:input name="MyNumber" type="Number" aura:id="num2" label="Number 2"/>
+    <br/>
+    <lightning:button label="Add" onclick="{!c.clickAdd}"/>
+
+
+</aura:component>

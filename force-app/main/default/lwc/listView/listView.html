@@ -1,0 +1,20 @@
+<template>
+    <p>Ruchi Chourasia</p>
+    {contacts}
+    <lightning-datatable
+        data={data}
+        columns={columns}
+        key-field="Id"
+        onrowaction={handleRowAction}>
+        <template for="actions" slot="actions">
+            <lightning-button-icon
+                variant="border-filled"
+                icon-name="utility:delete"
+                title="Delete"
+                onclick={handleDelete}>
+            </lightning-button-icon>
+        </template>
+ </lightning-datatable>
+
+    
+</template>

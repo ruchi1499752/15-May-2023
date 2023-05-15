@@ -1,0 +1,33 @@
+<apex:page standardController="Account">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <b>Visualforce Assignment - 1</b>
+                <br/>
+                <p>
+                    Create a simple form that displays the following fields : 
+                    <ul>
+                        <li>Account Name</li>
+                        <li>Industry</li>
+                        <li>Account id</li>
+                        <li>Account Rating</li>
+                        
+               		 </ul>
+                </p>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:outputField value="{!Account.name}"/><br/>
+                <apex:outputField value="{!Account.Industry}"/><br/>
+                <apex:outputField value="{!Account.id}"/><br/>
+                <apex:outputField value="{!Account.Rating}"/><br/>
+                
+              
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+       
+    </apex:form>
+</apex:page>

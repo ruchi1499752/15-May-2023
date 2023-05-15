@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,force:lightningQuickAction,lightning:actionOverride" >
+	<aura:attribute name="firstName" type="string"/>
+    <aura:attribute name="lastName" type="string"/>
+ 
+    <lightning:input label="Enter First Name" value="{!v.firstName}"/>
+    <lightning:input label="Enter Last Name" value="{!v.lastName}"/>
+    <lightning:button label="Add Contact" onclick="{!c.addContact}"/>
+</aura:component>

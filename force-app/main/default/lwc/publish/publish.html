@@ -1,0 +1,25 @@
+<template>
+    <lightning-card title="Account List">
+        <p >
+            <template for:each={AccList} for:item="account">
+                <div key={account.Id}  >
+                    <a href="#" data-value={account.Id} onclick={handleClick}>{account.Name}</a>
+                </div>
+            </template>
+        </p>
+    </lightning-card>
+<!--     
+    <div class="slds-scrollable_y"> -->
+        <!-- <lightning-card title="Account List">
+            <div class="slds-scrollable_y"  style="height: 700px;">
+            <p >
+                <template for:each={AccList} for:item="account">
+                    <div key={account.Id}  >
+                        <a href="#" data-value={account.Id} onclick={handleClick}>{account.Name}</a>
+                    </div>
+                </template>
+            </p>
+            </div>
+        </lightning-card>
+      </div> -->
+</template>

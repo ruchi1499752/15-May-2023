@@ -1,0 +1,5 @@
+<aura:component >
+	<h1>Ruchi Chourasia</h1>
+    <br/>
+    <p>This is Aura Component</p>
+</aura:component>

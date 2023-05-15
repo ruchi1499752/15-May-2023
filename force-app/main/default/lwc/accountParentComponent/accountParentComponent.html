@@ -1,0 +1,22 @@
+<template>
+    <!--Spinner-->
+    <div class="slds-box slds-theme_shade slds-box_custom">
+        <template if:true={show}>
+            <c-account-child-component acc-id={accountId} is-editable={editData} ></c-account-child-component><br/>
+            <!-- <c-contact-child-component contact-id={accountId} is-editable={editData}></c-contact-child-component><br/> 
+            <c-case-child-component case-id={accountId} is-editable={editData}></c-case-child-component><br/>
+            <c-contract-child-component contract-id={accountId} is-editable={editData}></c-contract-child-component>  -->
+        </template>
+      </div>
+   
+    <br/>
+    <div class="slds-align_absolute-center slds-docked-form-footer">
+        <template if:true={showEditButton}>
+            <lightning-button label="Edit" variant="brand" onclick={handleEdit}></lightning-button>
+        </template>
+        <template if:true={showSaveButton}>
+            <lightning-button label="Save" variant="brand" onclick={handleSave}></lightning-button>
+        </template>
+    </div>
+   
+</template>

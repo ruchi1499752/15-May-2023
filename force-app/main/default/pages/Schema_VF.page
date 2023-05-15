@@ -1,0 +1,62 @@
+<apex:page controller="Schema_Class" readOnly="true">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                
+                <apex:outputLabel value="Select Objects : "/>&nbsp;
+            	<apex:selectList value="{!selectedObj}" size="1">
+                <apex:selectOptions value="{!objects}" />
+                <apex:actionSupport event="onchange" action="{!objDetails}" rerender="change"/>
+                
+            </apex:selectList>
+            
+           <!-- <apex:pageBlockSection>
+                <apex:outputLabel value="{!objDesc}" id="change"/>
+               
+            </apex:pageBlockSection>-->
+            
+            <apex:pageBlockSectionItem id="change">
+                <apex:panelGrid >
+                    <apex:panelGroup >
+                        <apex:selectList value="{!sfields}" multiselect="true" style="width:200px;height:170px;">
+                            <apex:selectOptions value="{!fsoptions}"/>
+                        </apex:selectList>
+                    </apex:panelGroup>
+                </apex:panelGrid>
+            </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            
+            
+        </apex:pageBlock>
+       
+    </apex:form>
+    <!--<apex:form >
+   <apex:pageBlock id="AllObjectsList">
+    <apex:outputlabel value="Object Name"/>      
+        <apex:selectList value="{!SelectedObject}" id="ObjPickList" size="1">
+       <apex:selectOptions value="{!AllObjList}"/>
+    </apex:selectList>
+ </apex:pageBlock>
+ </apex:form>-->
+    <!--<apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Objects" />
+                	<apex:selectList size="1" value="{!selectObj}" >
+                    	<apex:selectOptions value="{!objects}"/>
+                        <apex:actionSupport event="onchange" action="{!details}" reRender="od"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+                <br/>
+            <apex:pageBlockSectionItem >
+                <apex:pageBlockSection >
+                    <apex:outputLabel value="{!getDes}" id="od"/>
+                </apex:pageBlockSection>
+            </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>-->
+</apex:page>

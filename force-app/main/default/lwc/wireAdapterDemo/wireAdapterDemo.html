@@ -1,0 +1,40 @@
+<template>
+    <div class="slds-border_top slds-border_right slds-border_bottom slds-border_left main">
+    <div class="slds-grid slds-border_top slds-border_right slds-border_bottom slds-border_left color" >
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-formatted-time value="WireAdapterDemo" class="slds-text-heading_large"></lightning-formatted-time>
+        </div>
+        
+        
+    </div>
+    <br/>
+    <!-- <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-2">
+            Account Name : {name}
+        </div>
+        <div class="slds-col slds-size_2-of-2">
+            Account Phone : {phone}
+        </div>
+        
+    </div>
+    <br/>
+    <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-2">
+            Account Id : {Id}
+        </div>
+        
+        
+    </div> -->
+    <template if:true={record.data}>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-2">
+                Account Name : {name}
+            </div>
+            
+            
+        </div>
+    </template>
+    <br/>
+    </div>
+
+</template>

@@ -1,0 +1,30 @@
+.bgColor {
+    background-color: #FF5C5C;
+}
+.greenRow {
+    background-color: #32CD32;
+  }
+tbody
+{
+    counter-reset: Serial;          
+}
+
+table
+{
+    border-collapse: separate;
+}
+
+tr td:first-child:before
+{
+    counter-increment: Serial;      
+    content: counter(Serial); 
+    
+}
+table tr:hover td { 
+    background-color: inherit;     
+    opacity: 1.0;
+ }
+ .my-icon {
+    --sds-c-icon-color-foreground-default: red;
+    /* --sds-c-icon-color-background: gray; */
+}

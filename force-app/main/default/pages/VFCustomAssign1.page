@@ -1,0 +1,14 @@
+<apex:page controller="customClass1">
+    
+    <apex:form >
+        <apex:pageBlock >
+        <apex:pageBlockSection title="Current account record Id is : {!currentRecordId}" >
+            <apex:outputField value="{!Account.name}"/>
+            <apex:outputField value="{!Account.name}"/>
+            <apex:outputField value="{!Account.name}"/>
+            <apex:outputField value="{!Account.name}"/>
+           
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,96 @@
+<template>
+   
+    {inputVal}
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_3-of-12">
+            
+        </div>
+        <div class="slds-col slds-size_6-of-12" style="height:580px;  border-radius : 5px;">
+            <br/>
+            <template if:false={show}>
+                <h1 style="color:black; text-align: center;" class="slds-text-heading_large">Authorize Dot Net Payment by ECheck</h1><br/>
+            </template>
+            <template if:true={show}>
+                <h1 style="color: black; text-align: center;" class="slds-text-heading_large">Authorize Dot Net Payment by Credit Card</h1><br/>
+            </template>
+            <!-- <h1 style="color:aliceblue; text-align: center;" class="slds-text-heading_large">Authorize Dot Net Payment by ECheck</h1><br/> -->
+            <br/>
+
+            <!-- Pay Using ECheck -->
+            <div  style="margin-left :75px; width:600px; padding : 18px; background-color : lightgray; border: 10px solid gray; ">
+                <article class="slds-card">
+                    <div class="slds-card__header slds-grid" >
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <img src={auhtorizeDotNet} >
+                            
+                        </header>
+                    </div>
+                </article>
+                <br/>
+                <template if:false={show}>
+                <div class="slds-size_2-of-2">
+                        
+                        <lightning-input type="text" name="rountingNumber" required="true" label="Rounting Number" pattern="[0-9]*" message-when-pattern-mismatch="Please enter digits" onchange={getValue} placeholder="021XXXXXX"></lightning-input>
+                </div>
+                <br/>
+                <div class="slds-size_2-of-2">
+                        <lightning-input type="text" name="accountNumber" required maxlength="16" label="Account Number"   onchange={getValue} placeholder="XXXXXX7890" ></lightning-input>
+                </div>
+                <br/>
+                <div class="slds-size_2-of-2">
+                        <lightning-input type="text" name="nameOnAccount" label="Name On Account" pattern="[A-Za-z]*" message-when-pattern-mismatch="Please enter characters" onchange={getValue} placeholder="Sam" ></lightning-input>
+                </div>
+                <br/>
+                <button class="slds-button slds-button_success" style="width: 550px;" onclick={placeOrder}>PLACE ORDER</button>
+                
+                <br/><br/>
+                <div class="slds-size_2-of-2" >
+                    <p style="text-align: center;" class="slds-text-heading_small">To Pay Using Credit Card <a href="#" onclick={changePayment}>Click Here</a> </p>
+                    
+                </div>
+                </template>
+
+                <!-- Pay Using Credit Card -->
+                <template if:true={show}>
+                    <div class="slds-size_2-of-2">
+                        <lightning-input type="text" label="Card Number" name="cardNumber" onchange={getValue} placeholder="021XXXXXX"></lightning-input>
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <lightning-combobox name="month" options={monthOptions} required placeholder="Expiry Month"
+                            label="Month" value={cardmMonth} onchange={getValue}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-combobox name="year" options={yearOptions} required placeholder="Expiry year"
+                            label="Year" value={cardYear} onchange={getValue}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input name="cvv" class="fieldvalidate" type="password" maxlength="1"
+                            label="CVV Number"  onchange={getValue}>
+                            </lightning-input>
+                          </div>
+                    </div>
+                    <br/>
+                    <!-- <div class="slds-size_2-of-2"> -->
+                        <button class="slds-button slds-button_success" onclick={handlePayment} style="width: 550px;">PLACE ORDER</button>
+                    <!-- </div> -->
+                    <br/><br/>
+                    <div class="slds-size_2-of-2" >
+                        <p style="text-align: center;" class="slds-text-heading_small">To Pay Using ECheck <a href="#" onclick={changeToEcheck}>Click Here</a> </p>
+                        
+                    </div>
+                </template>
+
+            </div>
+            
+        </div>
+        <div class="slds-col slds-size_3-of-12">
+            
+        </div>
+        
+    </div>
+    
+</template>

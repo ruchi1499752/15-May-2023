@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Conditional Directives : lwc:if, lwc:else, and lwc:elseif ">
+        <template lwc:if={name}>
+            {name}
+        </template>
+        <template lwc:else>
+            *********************
+        </template>
+        ===================================================
+        <br/>
+        <template if:true={name}>
+            Abra!
+        </template>
+        <template if:false={name}>
+            *********************************
+        </template>
+    </lightning-card>
+</template>

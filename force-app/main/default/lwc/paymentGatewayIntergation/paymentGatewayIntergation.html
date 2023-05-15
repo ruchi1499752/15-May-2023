@@ -1,0 +1,94 @@
+<template>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size_3-of-12">
+            
+        </div>
+        <div class="slds-col slds-size_6-of-12" style="height:580px;  border-radius : 5px;">
+            <br/>
+            <template if:false={show}>
+                <h1 style="color:aliceblue; text-align: center;" class="slds-text-heading_large">Authorize Dot Net Payment by ECheck</h1><br/>
+            </template>
+            <template if:true={show}>
+                <h1 style="color:aliceblue; text-align: center;" class="slds-text-heading_large">Authorize Dot Net Payment by Credit Card</h1><br/>
+            </template>
+            <!-- <h1 style="color:aliceblue; text-align: center;" class="slds-text-heading_large">Authorize Dot Net Payment by ECheck</h1><br/> -->
+            <br/>
+
+            <!-- Pay Using ECheck -->
+            <div  style="margin-left :75px; width:600px; padding : 18px; background-color : lightgray; border: 10px solid gray; ">
+                <article class="slds-card">
+                    <div class="slds-card__header slds-grid" >
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <img src={auhtorizeDotNet} >
+                            
+                        </header>
+                    </div>
+                </article>
+                <br/>
+                <template if:false={show}>
+                <div class="slds-size_2-of-2">
+                        
+                        <lightning-input type="Number" label="Rounting Number" placeholder="021XXXXXX"></lightning-input>
+                </div>
+                <br/>
+                <div class="slds-size_2-of-2">
+                        <lightning-input type="Number" label="Account Number"  placeholder="XXXXXX7890" ></lightning-input>
+                </div>
+                <br/>
+                <div class="slds-size_2-of-2">
+                        <lightning-input type="Number" label="Name On Account" placeholder="Sam" ></lightning-input>
+                </div>
+                <br/>
+                <button class="slds-button slds-button_success" style="width: 555px;">PLACE ORDER</button>
+                
+                <br/><br/>
+                <div class="slds-size_2-of-2" >
+                    <p style="text-align: center;" class="slds-text-heading_small">To Pay Using Credit Card <a href="#" onclick={changePayment}>Click Here</a> </p>
+                    
+                </div>
+                </template>
+
+                <!-- Pay Using Credit Card -->
+                <template if:true={show}>
+                    <div class="slds-size_2-of-2">
+                        <lightning-input type="Number" label="Card Number" placeholder="021XXXXXX"></lightning-input>
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <lightning-combobox name="month" options={monthOptions} placeholder="Expiry Month"
+                            label="Month" value={cardmMonth} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-combobox name="year" options={yearOptions} placeholder="Expiry year"
+                            label="Year" value={cardYear} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-input name="cvv" class="fieldvalidate" type="password" maxlength="4"
+                            label="CVV Number"  onchange={handleChange}>
+                            </lightning-input>
+                          </div>
+                    </div>
+                    <br/>
+                    <!-- <div class="slds-size_2-of-2"> -->
+                        <button class="slds-button slds-button_success" style="width: 555px;">PLACE ORDER</button>
+                    <!-- </div> -->
+                    <br/><br/>
+                    <div class="slds-size_2-of-2" >
+                        <p style="text-align: center;" class="slds-text-heading_small">To Pay Using ECheck <a href="#" onclick={changeToEcheck}>Click Here</a> </p>
+                        
+                    </div>
+                </template>
+
+            </div>
+            
+        </div>
+        <div class="slds-col slds-size_3-of-12">
+            
+        </div>
+        
+    </div>
+    
+</template>

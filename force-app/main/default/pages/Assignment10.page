@@ -1,0 +1,20 @@
+<apex:page controller="CustomPagination">
+<apex:form >
+	<apex:pageBlock >
+		<apex:pageblockTable value="{!acclist}" var="acc" id="info">
+            <apex:column value="{!acc.Name}"/>
+            <apex:column value="{!acc.id}"/>
+            <apex:column value="{!acc.industry}"/>
+            <apex:column value="{!acc.Rating}"/>
+
+		</apex:pageblockTable>
+        
+		<apex:pageblockButtons >
+    		<apex:commandButton value="First Page" rerender="details" action="{!FirstPage}" />
+            <apex:commandButton value="Previous" rerender="details" action="{!previous}"/>
+            <apex:commandButton value="Next" rerender="details" action="{!next}"/>
+            <apex:commandButton value="Last Page" rerender="details" action="{!LastPage}"/>
+        </apex:pageblockButtons>
+	</apex:pageBlock>
+</apex:form>
+</apex:page>

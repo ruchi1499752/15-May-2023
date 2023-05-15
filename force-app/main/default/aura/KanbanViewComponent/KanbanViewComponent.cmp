@@ -1,0 +1,152 @@
+<aura:component controller="KanbanViewController" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:attribute name="options" type="List"/>	
+    <aura:attribute name="selectedObj" type="String"/>
+	<aura:attribute name="picklistField" type="List"/>
+    <aura:attribute name="picklistFieldSelected" type="String"/>
+	<aura:attribute name="picklistRecords" type="List"/>
+    <aura:attribute name="showPickListField" type="Boolean" default="false"/>
+    <aura:attribute name="showAvailablePicklist" type="Boolean" default="true"/>
+    <aura:attribute name="showRecords" type="Boolean" default="false"/>
+    <aura:attribute name="showModal" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- Spinner -->
+    <aura:attribute name="spinner" type="Boolean" default="false"/>
+    <aura:if isTrue="{!v.spinner}"> 
+    	<div class="exampleHolder">
+        	<lightning:spinner alternativeText="Loading" variant="brand" size="large" />
+    	</div>
+    </aura:if>
+    
+    <!-- Header Part -->
+    <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Description of icon when needed">
+                    <lightning:icon iconName="standard:kanban" variant="bare" size="large"/>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <h1 class=" slds-text-heading_medium" title="Kanban - Drag &amp; Drop"><b>{!v.selectedObj}</b></h1>
+                <h1 class="slds-text-heading_medium"><b> Kanban - Drag &amp; Drop </b></h1>
+            </div>
+        </div> 
+    </div>   
+    <br/>
+    
+    <!-- Select Object -->
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-3">
+            <div class="slds-text-heading_medium"><h1>Select Object</h1></div>
+              <span>
+                <lightning:combobox name="objects" 
+                label=""
+                value="{!v.selectedObj}"
+                placeholder="None" 
+                options="{!v.options}" 
+                onchange="{!c.handleChange}"/>
+             </span>
+       		</div>
+    <!-- Select Picklist Field or not -->    
+    <!-- if objectselected than this block will display, now, if there is any picklist field.. then showpicklistfield variable should true otherwise false and if false, msg will display.<aura:if></aura:if> -->
+        <aura:if isTrue="{!v.showPickListField}">
+            <aura:if isTrue="{!v.showAvailablePicklist}">
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-text-heading_medium"><h1>Select Picklist Field</h1></div>
+                        <span>
+                            <lightning:combobox name="PickListField" 
+                            label=""    
+                            value="{!v.picklistFieldSelected}"
+                            placeholder="None" 
+                            options="{!v.picklistField}" 
+                            onchange="{!c.picklistFieldChange}"/>
+                        </span>
+                	</div>
+                <aura:set attribute="else">
+                    
+                   <div class="slds-text-align_center " style="margin-top : 30px;">
+                        <h1 class="slds-box slds-text-heading_medium slds-theme_shade">No Picklist Field Available in this Object.. </h1>
+                    </div>
+                    <!--<c:ShowModal/>-->
+                    
+                    
+                </aura:set>
+            </aura:if>
+        </aura:if>
+    </div>
+    <br/>
+    <br/>
+  
+<!-- Display picklist values and related records -->
+    <aura:if isTrue="{!v.showRecords}">
+    	<div class="slds-scrollable">
+        	<div class="slds-path">
+        		<div class="slds-grid ">
+            		<div class="slds-path__track">
+                    	<div style="min-width: 180px;" >
+                        <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal" >
+                            <aura:iteration items="{!v.picklistRecords}" var="rec" indexVar="key">
+                                <li class="slds-size_medium slds-m-right_x-small "> 
+                                    <div class="slds-path__item slds-is-current slds-is-active" role="presentation" >
+                                        <a aria-selected="true" class="slds-path__link" href="#" id="path-1" role="option">
+                                            <span class="slds-path__title" >{!rec.key} (<span id ="{!rec.key}"> {!rec.value.length}</span>) </span>
+                                        </a>
+                                    </div>
+                                    <div class="slds-col slds-size_medium slds-float_left slds-scrollable_y slds-theme_shade slds-m-around_xx-small" style="height: 29rem;" id="{!rec.key}" ondrop="{!c.dropElement}" ondragover="{!c.allowdrop}" >  
+                                        <aura:iteration items="{!rec.value}" var="val">
+                                            <ul class="slds-box slds-box_small slds-size_medium border-x slds-m-around_xx-small slds-truncate slds-theme_default" id="{!val.Id}" draggable="true" ondragstart="{!c.dragElement}">
+                                                <lightning:card >
+                                                   
+                                                    <p class="slds-p-horizontal_small"><a href="{!'/'+ val.Id}" target="_blank">{!val.Name}</a></p>
+                                                    
+                                               </lightning:card>
+                                                
+                                            </ul>
+                                        </aura:iteration>
+                                    </div>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </aura:if>
+    <br/><br/>
+
+    <!--<div>Ignore this one </div>
+    <div class="scrollable_x">
+    	    <div class="slds-path">
+        <div class="slds-grid slds-path__track slds-has-overflow">
+            <div class="slds-grid slds-path__scroller-container">
+                <div class="slds-path__scroller">
+                    <div class="slds-path__scroller_inner">
+                        <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                            
+                            <aura:iteration items="{!v.picklistRecords}" var="rec" indexVar="key">
+
+                                <li class="slds-path__item slds-is-current  slds-is-active" role="presentation">
+                                    <div >
+                                        <a aria-selected="true" class="slds-path__link" href="#" id="path-1" role="option">
+                                            <span class="slds-path__title" >{!rec.key} (<span id ="{!rec.key}"> {!rec.value.length}</span>) </span>
+                                        </a>
+                                    </div>
+                                
+                                   
+                                </li>
+                              
+                            </aura:iteration>
+
+                        </ul>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>-->
+
+<br/>
+</aura:component>

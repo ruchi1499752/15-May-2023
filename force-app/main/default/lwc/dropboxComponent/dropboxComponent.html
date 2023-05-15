@@ -1,0 +1,173 @@
+<template>
+    <div class="borderRound" >
+    
+    <lightning-card title="DROPBOX INTEGRATION">
+        
+            <!-- <img src={DropBox_Logo} width="150px;" height="150px;"> -->
+            <!-- <h1>DROPBOX INTEGRATION</h1> -->
+        
+        
+        
+    <!-- Breadcrumb -->
+    
+    <div class="slds-box slds-box_x-small" style="border: 2px solid black;" >
+        <nav role="navigation" aria-label="Breadcrumbs">
+            <ol class="slds-breadcrumb slds-list_horizontal slds-wrap" >
+                <template for:each={myBreadcrumbs} for:item="crumbs" >
+                    <lightning-breadcrumb 
+                        key={crumbs.id}
+                        label={crumbs.name}
+                        onclick={handleNavigateTo}
+                        data-name={crumbs.name} data-id={crumbs.id}> 
+                    </lightning-breadcrumb>
+                </template>
+            </ol>
+        </nav>
+    </div>
+    <br/>
+    
+    
+      <!-- DISPLAY FILE DATA -->
+    <div class="slds-page-header" style="border: 2px solid black;">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_6-of-12 slds-text-heading_small" >
+                <h1 >FILES</h1>
+            </div>
+            <div class="slds-col slds-size_6-of-12" style="padding-left: 500px;">
+                <lightning-button label="Upload New File" variant="brand" icon-name="utility:upload" onclick={uploadModal}></lightning-button>
+                <template if:true={ShowUploadFileModal}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-2" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                         <!-- modal header start -->
+                           <header class="slds-modal__header">
+                              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                                 <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                 <span class="slds-assistive-text">Close</span>
+                              </button>
+                              <h2 id="modal-heading-1" class="slds-text-heading_medium slds-hyphenate">Upload File</h2>
+                           </header>
+                       
+                           <!-- modal body start -->
+                           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                <lightning-input type="file" label="Choose File" accept="image/png, image/jpg, .zip" onchange={handleFileUploaded}></lightning-input>
+                            </div>
+                 
+                           <!-- modal footer start-->
+                           <footer class="slds-modal__footer">
+                              <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                           </footer>
+                        
+                        </div>
+                     </section>
+                     <div class="slds-backdrop slds-backdrop_open"></div>
+
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-scrollable" style="height:20rem;width:100% ;">
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" >
+            <thead >
+                <tr class="slds-text-heading_small " >
+                    <th>Name</th>
+                    <th style="padding-left: 620px;">Action</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+                <template for:each={file} for:item="item">
+                    <tr key={item.id}>
+                        <td class="slds-size_6-of-12" data-label = "Files Name">
+                            <lightning-icon icon-name="action:add_file" size="x-small" ></lightning-icon> &nbsp;&nbsp; {item.name}
+                        </td>
+                        <td class="slds-size_6-of-12" style="padding-left: 550px;">
+                            <a><lightning-icon icon-name="action:delete" data-id={item.id} data-name={item.path_lower} data-value={item.name} size="x-small" onclick={delFile}></lightning-icon>&nbsp;</a> 
+                        </td>
+                        <td >
+                            <a><lightning-icon icon-name="action:download" data-id={item.id} data-name={item.path_lower} data-value={item.name} size="x-small" onclick={downloadFile}></lightning-icon>&nbsp;</a>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    
+
+    <!-- DISPLAY FOLDER DATA -->
+    <div class="slds-page-header" style="border: 2px solid black;">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_6-of-12 slds-text-heading_small" >
+                <h1 >FOLDERS</h1>
+            </div>
+            <div class="slds-col slds-size_6-of-12" style="padding-left: 500px;">
+                <lightning-button label="Create New Folder" variant="brand" icon-name="utility:new"  onclick={createFolderModal}></lightning-button>
+                <template if:true={isShowModal}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                         <!-- modal header start -->
+                           <header class="slds-modal__header">
+                              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+                                 <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                 <span class="slds-assistive-text">Close</span>
+                              </button>
+                              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create New Folder</h2>
+                           </header>
+                       
+                           <!-- modal body start -->
+                           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <lightning-input type="text" label="Enter Folder Name" value={inputVal} onchange={changeInputValue}></lightning-input>
+                            <br/>
+                            <lightning-button label="Create Folder" variant="brand"    onclick={createNewFolder}></lightning-button>
+                        </div>
+                 
+                           <!-- modal footer start-->
+                           <footer class="slds-modal__footer">
+                              <button class="slds-button slds-button_neutral" onclick={hideModalBox}>Cancel</button>
+                           </footer>
+                        
+                        </div>
+                     </section>
+                     <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+            </div>
+
+        </div>
+    </div>
+    <div class="slds-scrollable" style="height:20rem;width:100% ;">
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" >
+            <thead>
+                <tr class="slds-text-heading_small ">
+                    <th>Name</th>
+                    <th style="padding-left: 560px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={folder} for:item="item">
+                    <tr key={item.id}>
+                        <td class="slds-size_6-of-12" data-label = "Files Name">
+                            <lightning-icon icon-name="standard:folder" size="x-medium"></lightning-icon> &nbsp;&nbsp;   <a style="text-decoration: none;" data-id={item.id} data-name={item.path_lower} data-value={item.name} onclick={openFolder}>{item.name}</a> 
+                        </td>
+                        <td class="slds-size_6-of-12" style="padding-left: 550px;">
+                           <a><lightning-icon icon-name="action:delete" data-id={item.id} data-name={item.path_lower} data-value={item.name} size="x-small" onclick={delFolder}></lightning-icon>&nbsp;</a> 
+                         </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    
+    
+    </lightning-card>
+    </div>
+</template>
+
+ <!-- <div >
+        <img src="https://aem.dropbox.com/cms/content/dam/dropbox/www/en-us/branding/dropbox-logo@2x.jpg" width="200px;" height="200px;">
+    </div> -->
